@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="编译和链接C++源程序变为目标平台上的可执行程序需要经过编译器以及链接器。  编译器：首先将源代码解析为语法分析树，再根据语法分析树生成对应的中间代码或直接生成对应平台的汇编码、机器码，即生成目标文件。 链接器：将目标模块链接为可执行程序。  g++ -c 只编译不链接 g++ -o 链接目标程序 12345678910111213141516171819202122--- Desktop&#x2F;oop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象_编程环境基础">
+<meta property="og:url" content="http://believebest35.github.io/2020/10/05/OOP-THU-1/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="编译和链接C++源程序变为目标平台上的可执行程序需要经过编译器以及链接器。  编译器：首先将源代码解析为语法分析树，再根据语法分析树生成对应的中间代码或直接生成对应平台的汇编码、机器码，即生成目标文件。 链接器：将目标模块链接为可执行程序。  g++ -c 只编译不链接 g++ -o 链接目标程序 12345678910111213141516171819202122--- Desktop&#x2F;oop">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-05T08:34:31.000Z">
+<meta property="article:modified_time" content="2020-10-05T12:57:58.141Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/10/05/OOP-THU-1/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>面向对象_编程环境基础 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译和链接"><span class="nav-number">1.</span> <span class="nav-text">编译和链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#宏定义"><span class="nav-number">2.</span> <span class="nav-text">宏定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAKE工具"><span class="nav-number">3.</span> <span class="nav-text">MAKE工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-程序命令行参数"><span class="nav-number">4.</span> <span class="nav-text">C++程序命令行参数</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/05/OOP-THU-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象_编程环境基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-05 16:34:31 / 修改时间：20:57:58" itemprop="dateCreated datePublished" datetime="2020-10-05T16:34:31+08:00">2020-10-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h1><p>C++源程序变为目标平台上的可执行程序需要经过编译器以及链接器。</p>
+<ul>
+<li>编译器：首先将源代码解析为语法分析树，再根据语法分析树生成对应的中间代码或直接生成对应平台的汇编码、机器码，即生成目标文件。</li>
+<li>链接器：将目标模块链接为可执行程序。</li>
+</ul>
+<p>g++ -c 只编译不链接</p>
+<p>g++ -o 链接目标程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp</span><br><span class="line">--- Desktop/oop_test » cat main.cpp</span><br><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">"hello world"</span> &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp</span><br><span class="line">--- Desktop/oop_test » g++ -c main.cpp</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o</span><br><span class="line">--- Desktop/oop_test » g++ -o main.out main.o</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » ./main.out</span><br><span class="line">hello world</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<h1 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h1><ul>
+<li>简单的宏定义：#define &lt;宏名&gt; &lt;字符串&gt; 如</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.14 <span class="comment">// 不建议使用宏定义，建议使用const定义常量</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>带参数的宏定义：#define &lt;宏名&gt; (&lt;参数表&gt;) &lt;字符串&gt; 如</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sqr(x) ((x) * (x))</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>防止头文件的重复包含</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __BODYDEF_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __BODYDEF_H__</span></span><br><span class="line"><span class="comment">// 头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>防止头文件的重复包含也可以采用如下方式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br></pre></td></tr></table></figure>
+
+<p>以上保证所有文件不会被编译两次</p>
+<ul>
+<li>用于Debug输出</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> 标识符</span></span><br><span class="line">  <span class="comment">// 程序段1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="comment">// 程序段2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="MAKE工具"><a href="#MAKE工具" class="headerlink" title="MAKE工具"></a>MAKE工具</h1><p>MAKE工具是使得大型工程编译工程自动化的一种工具，相当于一个脚本集合。</p>
+<p>关于Make命令的具体教程可以参见<a href="http://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="noopener">Make命令教程</a></p>
+<p>格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;target&gt;: prerequisites</span><br><span class="line">&lt;tab&gt; <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+
+<p>其中target表示目标文件，target不能为空。prerequisites表示target所依赖的文件，可以为空。</p>
+<p>prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行。</p>
+<p>一个简单的栗子，假设makefile文件编写如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span>: a.txt b.txt c.txt</span><br><span class="line"></span><br><span class="line">b.txt:</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line"></span><br><span class="line">c.txt:</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"this is a test2"</span> &gt; c.txt</span><br><span class="line"></span><br><span class="line">a.txt: b.txt c.txt</span><br><span class="line">        cat b.txt c.txt &gt; a.txt</span><br></pre></td></tr></table></figure>
+
+<p>终端中输入make便会执行第一条命令，即make source</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test » make <span class="built_in">source</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test2"</span> &gt; c.txt</span><br><span class="line">cat b.txt c.txt &gt; a.txt</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">a.txt    b.txt    c.txt    main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<p>也可以显式指定要执行的命令，例如make b.txt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test » make b.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">b.txt    main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<p>常常利用make来管理大型工程的编译过程，更多关于make的高级过程可查询教程。</p>
+<h1 id="C-程序命令行参数"><a href="#C-程序命令行参数" class="headerlink" title="C++程序命令行参数"></a>C++程序命令行参数</h1><p>main函数可接受来自命令行的参数，例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中argc中存储的是命令行参数的个数，argv则以C风格字符串的形式保存参数，其中包含了可执行程序文件的名称本身，举一个栗子：<br>main函数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> ** b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; b[<span class="number">0</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"hello world"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>终端执行结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » g++ main.cpp</span><br><span class="line">ls%                                                                                                                                                                                                         --- Desktop/oop_test » ls</span><br><span class="line">a.out    main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » ./a.out 1 1 1 1 1</span><br><span class="line">6</span><br><span class="line">./a.out</span><br><span class="line">hello world</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/15/data-structure-post-1/" rel="prev" title="数据结构基础">
+      <i class="fa fa-chevron-left"></i> 数据结构基础
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

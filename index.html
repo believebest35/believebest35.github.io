@@ -156,13 +156,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -194,6 +194,123 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/05/OOP-THU-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/05/OOP-THU-1/" class="post-title-link" itemprop="url">面向对象_编程环境基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-05 16:34:31 / 修改时间：20:57:58" itemprop="dateCreated datePublished" datetime="2020-10-05T16:34:31+08:00">2020-10-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h1><p>C++源程序变为目标平台上的可执行程序需要经过编译器以及链接器。</p>
+<ul>
+<li>编译器：首先将源代码解析为语法分析树，再根据语法分析树生成对应的中间代码或直接生成对应平台的汇编码、机器码，即生成目标文件。</li>
+<li>链接器：将目标模块链接为可执行程序。</li>
+</ul>
+<p>g++ -c 只编译不链接</p>
+<p>g++ -o 链接目标程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp</span><br><span class="line">--- Desktop/oop_test » cat main.cpp</span><br><span class="line"><span class="comment">#include&lt;iostream&gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">"hello world"</span> &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp</span><br><span class="line">--- Desktop/oop_test » g++ -c main.cpp</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o</span><br><span class="line">--- Desktop/oop_test » g++ -o main.out main.o</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » ./main.out</span><br><span class="line">hello world</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<h1 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h1><ul>
+<li>简单的宏定义：#define &lt;宏名&gt; &lt;字符串&gt; 如</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.14 <span class="comment">// 不建议使用宏定义，建议使用const定义常量</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>带参数的宏定义：#define &lt;宏名&gt; (&lt;参数表&gt;) &lt;字符串&gt; 如</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sqr(x) ((x) * (x))</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>防止头文件的重复包含</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __BODYDEF_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __BODYDEF_H__</span></span><br><span class="line"><span class="comment">// 头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>防止头文件的重复包含也可以采用如下方式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br></pre></td></tr></table></figure>
+
+<p>以上保证所有文件不会被编译两次</p>
+<ul>
+<li>用于Debug输出</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> 标识符</span></span><br><span class="line">  <span class="comment">// 程序段1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="comment">// 程序段2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="MAKE工具"><a href="#MAKE工具" class="headerlink" title="MAKE工具"></a>MAKE工具</h1><p>MAKE工具是使得大型工程编译工程自动化的一种工具，相当于一个脚本集合。</p>
+<p>关于Make命令的具体教程可以参见<a href="http://www.ruanyifeng.com/blog/2015/02/make.html" target="_blank" rel="noopener">Make命令教程</a></p>
+<p>格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;target&gt;: prerequisites</span><br><span class="line">&lt;tab&gt; <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+
+<p>其中target表示目标文件，target不能为空。prerequisites表示target所依赖的文件，可以为空。</p>
+<p>prerequisites中如果有一个以上的文件比target文件要新的话，command所定义的命令就会被执行。</p>
+<p>一个简单的栗子，假设makefile文件编写如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span>: a.txt b.txt c.txt</span><br><span class="line"></span><br><span class="line">b.txt:</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line"></span><br><span class="line">c.txt:</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"this is a test2"</span> &gt; c.txt</span><br><span class="line"></span><br><span class="line">a.txt: b.txt c.txt</span><br><span class="line">        cat b.txt c.txt &gt; a.txt</span><br></pre></td></tr></table></figure>
+
+<p>终端中输入make便会执行第一条命令，即make source</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test » make <span class="built_in">source</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test2"</span> &gt; c.txt</span><br><span class="line">cat b.txt c.txt &gt; a.txt</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">a.txt    b.txt    c.txt    main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<p>也可以显式指定要执行的命令，例如make b.txt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test » make b.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"this is a test"</span> &gt; b.txt</span><br><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">b.txt    main.cpp main.o   main.out makefile</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+<p>常常利用make来管理大型工程的编译过程，更多关于make的高级过程可查询教程。</p>
+<h1 id="C-程序命令行参数"><a href="#C-程序命令行参数" class="headerlink" title="C++程序命令行参数"></a>C++程序命令行参数</h1><p>main函数可接受来自命令行的参数，例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中argc中存储的是命令行参数的个数，argv则以C风格字符串的形式保存参数，其中包含了可执行程序文件的名称本身，举一个栗子：<br>main函数如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">char</span> ** b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; b[<span class="number">0</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"hello world"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>终端执行结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">--- Desktop/oop_test » ls</span><br><span class="line">main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » g++ main.cpp</span><br><span class="line">ls%                                                                                                                                                                                                         --- Desktop/oop_test » ls</span><br><span class="line">a.out    main.cpp main.o   main.out</span><br><span class="line">--- Desktop/oop_test » ./a.out 1 1 1 1 1</span><br><span class="line">6</span><br><span class="line">./a.out</span><br><span class="line">hello world</span><br><span class="line">--- Desktop/oop_test »</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1092,78 +1209,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/07/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xinrui Tang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/19/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-19 23:31:33" itemprop="dateCreated datePublished" datetime="2020-07-19T23:31:33+08:00">2020-07-19</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
