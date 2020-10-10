@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -194,6 +194,138 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/09/OOP-THU-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/09/OOP-THU-5/" class="post-title-link" itemprop="url">面向对象_组合与继承</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-09 20:31:17" itemprop="dateCreated datePublished" datetime="2020-10-09T20:31:17+08:00">2020-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-10 19:51:26" itemprop="dateModified" datetime="2020-10-10T19:51:26+08:00">2020-10-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>小的对象组合起来可以形成更大的对象，若对象a是对象b的一个组成部分，则可以说对象b是对象a的整体对象，对象a是对象b的部分对象。对象组合一般有两种实现方法：</p>
+<ol>
+<li>将已有的类（对象a）定义为新定义的类（对象b）的公有成员，则可以通过访问原有的类提供旧的接口。</li>
+<li>将已有的类定义为新定义的类的私有成员，这样新的类就必须提供新的接口用以访问旧的类，相当于对接口做了变换。</li>
+</ol>
+<p>以上的实现形式如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_i</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        i = x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_i</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        i = x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    A a;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    B b;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setA</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        a.set_i(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    C c;</span><br><span class="line">    c.b.<span class="built_in">set</span>(<span class="number">0</span>);</span><br><span class="line">    c.setA(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子对象构造时若需要参数，则应在当前类的构造函数的初始化列表中进行初始化。</p>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>继承即是从一般到特殊的过程，若类A具有类B全部的数据成员以及对应的接口函数，除此之外还拥有一些自己独有的某些数据成员以及接口函数，则称类A继承与类B。</p>
+<p>被继承的已有的类，被称为<strong>基类</strong>（base class），或者叫做<strong>父类</strong>。</p>
+<p>继承定义出的新的类，被称为<strong>派生类</strong>（derived class），亦称作<strong>子类</strong>、<strong>扩展类</strong>。</p>
+<p>常见的继承方式：</p>
+<ul>
+<li><p>public继承，定义形式如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">derived_class</span>:</span> <span class="keyword">public</span> base_class</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>private继承，定义形式如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">derived_class</span>:</span> <span class="keyword">private</span> base_class</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>private继承也是默认的继承方式。</p>
+<ul>
+<li><p>protected继承，定义形式如下所示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">derived_class</span>:</span> <span class="keyword">protected</span> base_class</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>最后一种继承方式很少使用。</p>
+<h2 id="派生类对象的构造和析构"><a href="#派生类对象的构造和析构" class="headerlink" title="派生类对象的构造和析构"></a>派生类对象的构造和析构</h2><p>派生类对象的构造过程中首先初始化的是原属于基类的数据成员，需要调用原属于基类的构造函数来进行初始化。若没有显式调用则会自动调用属于基类的默认构造函数，若显式调用则只能在派生类的构造函数的初始化成员列表中进行调用。基类的数据成员初始化完毕之后再执行派生类的的构造函数。</p>
+<p>对象析构时，派生类析构函数先执行，后续再执行基类的析构函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    base(): x(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">    base(<span class="keyword">int</span> i): x(i) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">derived</span>:</span> <span class="keyword">public</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    derived(<span class="keyword">int</span> i): base(i) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上所示，派生类构造函数中显式调用基类的构造函数必须在初始化列表中进行。</p>
+<h2 id="继承基类构造函数"><a href="#继承基类构造函数" class="headerlink" title="继承基类构造函数"></a>继承基类构造函数</h2><p>在派生类中使用using Base::Base; 来继承基类构造函数，相当于给派生类“定义”了相应参数的构造函数。示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Base(<span class="keyword">int</span> i) : data(i) &#123;&#125;</span><br><span class="line">    <span class="comment">//Base(int i, int j) : data(i + j) &#123;&#125;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derive</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> Base::Base; 		<span class="comment">///相当于 Derive(int i):Base(i)&#123;&#125;;</span></span><br><span class="line">                          <span class="comment">///当基类存在多个构造函数时，使用using也会给派生类生成多个对应的构造函数，相当于 Derive(int i, int j):Base(i + j)&#123;&#125;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Derive <span class="title">obj</span><span class="params">(<span class="number">356</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码在c++11的情况下通过编译，mac自带的clang似乎不能通过编译。。</p>
+<h2 id="继承方式的选择"><a href="#继承方式的选择" class="headerlink" title="继承方式的选择"></a>继承方式的选择</h2><ul>
+<li>public继承</li>
+</ul>
+<p>基类中的公有成员在派生类中仍然能保持公有，原有的接口仍能使用，是最为常用的一种继承方式。</p>
+<ul>
+<li>private继承</li>
+</ul>
+<p>通常很少使用，可通过组合替代。</p>
+<ul>
+<li>protected继承</li>
+</ul>
+<p>基本不使用，存在只是为了语言的完备性。</p>
+<h2 id="基类成员访问权限与三种继承方式"><a href="#基类成员访问权限与三种继承方式" class="headerlink" title="基类成员访问权限与三种继承方式"></a>基类成员访问权限与三种继承方式</h2><ul>
+<li>public继承</li>
+</ul>
+<p>基类的公有成员，保护成员，私有成员作为派生类的成员时，都保持原有的状态。</p>
+<ul>
+<li>private继承</li>
+</ul>
+<p>基类的公有成员，保护成员，私有成员作为派生类的成员时，都作为私有成员。</p>
+<ul>
+<li>protected继承</li>
+</ul>
+<p>基类的公有成员，保护成员作为派生类的成员时，都成为保护成员，基类的私有成员仍然是私有的。</p>
+<h2 id="重写隐藏"><a href="#重写隐藏" class="headerlink" title="重写隐藏"></a>重写隐藏</h2><p>重写隐藏指的是在派生类中重新定义基类的函数，这样会屏蔽掉基类中的同名函数。</p>
+<p>重写隐藏发生时基类中该同名函数的所有重载函数都会被屏蔽掉。可以在派生类中通过using 类名::成员函数名; 在派生类中“恢复”指定的基类成员函数（即去掉屏蔽），使之重新可用。</p>
+<h2 id="向上类型转换"><a href="#向上类型转换" class="headerlink" title="向上类型转换"></a>向上类型转换</h2><p>派生类对象/引用/指针转换成基类对象/引用/指针，称为向上类型转换，只对public继承有效。</p>
+<p>凡是接受基类对象/引用/指针的地方（如函数参数），都可以使用派生类对象/引用/指针，编译器会自动将派生类对象转换为基类对象以便使用。</p>
+<p>当派生类的对象(不是指针或引用)被转换为基类的对象时，派生类的对象被切片为对应基类的子对象，即会产生派生类对象数据的丢失。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1269,82 +1401,6 @@
 
 <h3 id="方法二：数学规律"><a href="#方法二：数学规律" class="headerlink" title="方法二：数学规律"></a>方法二：数学规律</h3><p>额，直接才想N能不能被2整除，能整除就返回true，否则false。证明可用数学归纳法。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> N % <span class="number">2</span> == <span class="number">0</span>；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/07/23/leetcode-solution-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xinrui Tang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/23/leetcode-solution-3/" class="post-title-link" itemprop="url">leetcode 287 寻找重复数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-23 15:10:49" itemprop="dateCreated datePublished" datetime="2020-07-23T15:10:49+08:00">2020-07-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-24 15:53:54" itemprop="dateModified" datetime="2020-07-24T15:53:54+08:00">2020-07-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Leetcode-287-寻找重复数"><a href="#Leetcode-287-寻找重复数" class="headerlink" title="Leetcode 287 寻找重复数"></a>Leetcode 287 寻找重复数</h1><p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">leetcode 287</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: [1,3,4,2,2]<br>输出: 2</p>
-<p>输入: [3,1,3,4,2]<br>输出: 3</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>不能更改原数组（假设数组是只读的）。</li>
-<li>只能使用额外的 O(1) 的空间。</li>
-<li>时间复杂度小于 O(n^2) 。</li>
-<li>数组中只有一个重复的数字，但它可能不止重复出现一次。</li>
-</ul>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>这道题如果没有说明里的条件的话是非常容易的，可以排序，或者哈希，但是排序修改了原数组，哈希需要O(n)的空间。另外如果没有第一个条件的话可以考虑使用原地哈希。</p>
-<p>以上的方法不能使用，因此实际做的时候用的是二分，不过不是对下标进行二分，而是对值域进行二分。最开始范围取到1～n，mid = (1 + n) / 2，每次分别统计小于mid，等于mid以及大于mid的个数，据此缩小空间。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = n;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> less_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> large_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> count_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> mid = i + (j - i) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums)</span><br><span class="line">                <span class="keyword">if</span> (num == mid)</span><br><span class="line">                    count_k++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (num &lt; mid)</span><br><span class="line">                    less_k++;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    large_k++;</span><br><span class="line">            <span class="keyword">if</span> (count_k &gt;= <span class="number">2</span>)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">if</span> (less_k &gt; mid - <span class="number">1</span>)</span><br><span class="line">                j = mid - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                i = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i; <span class="comment">// 题目数据保证，不会在这退出。。。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
     </div>
 

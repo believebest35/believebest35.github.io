@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -194,6 +194,82 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/07/23/leetcode-solution-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/23/leetcode-solution-3/" class="post-title-link" itemprop="url">leetcode 287 寻找重复数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-23 15:10:49" itemprop="dateCreated datePublished" datetime="2020-07-23T15:10:49+08:00">2020-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-24 15:53:54" itemprop="dateModified" datetime="2020-07-24T15:53:54+08:00">2020-07-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Leetcode-287-寻找重复数"><a href="#Leetcode-287-寻找重复数" class="headerlink" title="Leetcode 287 寻找重复数"></a>Leetcode 287 寻找重复数</h1><p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">leetcode 287</a></p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: [1,3,4,2,2]<br>输出: 2</p>
+<p>输入: [3,1,3,4,2]<br>输出: 3</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>不能更改原数组（假设数组是只读的）。</li>
+<li>只能使用额外的 O(1) 的空间。</li>
+<li>时间复杂度小于 O(n^2) 。</li>
+<li>数组中只有一个重复的数字，但它可能不止重复出现一次。</li>
+</ul>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>这道题如果没有说明里的条件的话是非常容易的，可以排序，或者哈希，但是排序修改了原数组，哈希需要O(n)的空间。另外如果没有第一个条件的话可以考虑使用原地哈希。</p>
+<p>以上的方法不能使用，因此实际做的时候用的是二分，不过不是对下标进行二分，而是对值域进行二分。最开始范围取到1～n，mid = (1 + n) / 2，每次分别统计小于mid，等于mid以及大于mid的个数，据此缩小空间。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = n;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> less_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> large_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> count_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> mid = i + (j - i) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums)</span><br><span class="line">                <span class="keyword">if</span> (num == mid)</span><br><span class="line">                    count_k++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (num &lt; mid)</span><br><span class="line">                    less_k++;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    large_k++;</span><br><span class="line">            <span class="keyword">if</span> (count_k &gt;= <span class="number">2</span>)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">if</span> (less_k &gt; mid - <span class="number">1</span>)</span><br><span class="line">                j = mid - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                i = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i; <span class="comment">// 题目数据保证，不会在这退出。。。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
