@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="函数调用捆绑首先明确C++中捆绑的概念，捆绑（binding）指的是将函数的调用与函数的实现部分（函数体）相联系起来，即将函数体实现代码的入口地址与调用的函数名相绑定，程序执行到函数调用时会直接进入到函数实现代码。 捆绑可分为早捆绑和晚捆绑两个类别。  早捆绑（early binding）  在程序运行之前（即编译时）已经确定了函数调用与具体的函数体之间的绑定关系，运行之前可以知道函数调用将会进入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象_虚函数与多态">
+<meta property="og:url" content="http://believebest35.github.io/2020/10/11/OOP-THU-6/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="函数调用捆绑首先明确C++中捆绑的概念，捆绑（binding）指的是将函数的调用与函数的实现部分（函数体）相联系起来，即将函数体实现代码的入口地址与调用的函数名相绑定，程序执行到函数调用时会直接进入到函数实现代码。 捆绑可分为早捆绑和晚捆绑两个类别。  早捆绑（early binding）  在程序运行之前（即编译时）已经确定了函数调用与具体的函数体之间的绑定关系，运行之前可以知道函数调用将会进入">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-11T11:08:48.000Z">
+<meta property="article:modified_time" content="2020-10-12T13:33:27.172Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/10/11/OOP-THU-6/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>面向对象_虚函数与多态 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#函数调用捆绑"><span class="nav-number">1.</span> <span class="nav-text">函数调用捆绑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚函数"><span class="nav-number">2.</span> <span class="nav-text">虚函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数表"><span class="nav-number">2.1.</span> <span class="nav-text">虚函数表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数与构造函数"><span class="nav-number">2.2.</span> <span class="nav-text">虚函数与构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数与析构函数"><span class="nav-number">2.3.</span> <span class="nav-text">虚函数与析构函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重写覆盖"><span class="nav-number">3.</span> <span class="nav-text">重写覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Override关键字"><span class="nav-number">3.1.</span> <span class="nav-text">Override关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#final关键字"><span class="nav-number">3.2.</span> <span class="nav-text">final关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯虚函数"><span class="nav-number">3.3.</span> <span class="nav-text">纯虚函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯虚析构函数"><span class="nav-number">3.4.</span> <span class="nav-text">纯虚析构函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#向下类型转换"><span class="nav-number">4.</span> <span class="nav-text">向下类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向上向下类型转换与虚函数表"><span class="nav-number">4.1.</span> <span class="nav-text">向上向下类型转换与虚函数表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多态"><span class="nav-number">5.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多重继承"><span class="nav-number">6.</span> <span class="nav-text">多重继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP核心思想"><span class="nav-number">7.</span> <span class="nav-text">OOP核心思想</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/11/OOP-THU-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象_虚函数与多态
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-11 19:08:48" itemprop="dateCreated datePublished" datetime="2020-10-11T19:08:48+08:00">2020-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-12 21:33:27" itemprop="dateModified" datetime="2020-10-12T21:33:27+08:00">2020-10-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="函数调用捆绑"><a href="#函数调用捆绑" class="headerlink" title="函数调用捆绑"></a>函数调用捆绑</h1><p>首先明确C++中捆绑的概念，<strong>捆绑</strong>（binding）指的是将函数的调用与函数的实现部分（函数体）相联系起来，即将函数体实现代码的入口地址与调用的函数名相绑定，程序执行到函数调用时会直接进入到函数实现代码。</p>
+<p>捆绑可分为<strong>早捆绑</strong>和<strong>晚捆绑</strong>两个类别。</p>
+<ul>
+<li>早捆绑（early binding）</li>
+</ul>
+<p>在程序运行之前（即编译时）已经确定了函数调用与具体的函数体之间的绑定关系，运行之前可以知道函数调用将会进入哪个函数体，这会导致如下的问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instrument</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Instrument::play"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wind</span> :</span> <span class="keyword">public</span> Instrument</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Wind::play"</span> &lt;&lt; <span class="built_in">endl</span>; &#125; <span class="comment">/// 重写隐藏</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tune</span><span class="params">(Instrument&amp; i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    i.play();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Wind flute;</span><br><span class="line">    tune(flute); <span class="comment">/// 向上类型转换</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上的程序运行后实际会输出“Instrument::play”，这就是由于tune()中的i.play()和Instrument::play()的早捆绑所导致的。</p>
+<ul>
+<li>晚捆绑（late binding）</li>
+</ul>
+<p>与早捆绑相对应，晚捆绑发生在程序运行时，即程序运行之后才知道函数调用的所关联的具体函数体。晚捆绑只针对类中的虚函数起作用。</p>
+<h1 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h1><p>对于被派生类重新定义的成员函数，若它在基类中被声明为虚函数，则<strong>通过基类指针</strong>或<strong>引用</strong>调用该成员函数时，编译器将<strong>根据所指（或引用）对象的实际类型</strong>决定是调用基类中的函数，还是调用派生类重写的函数。虚函数定义说明如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> returnType <span class="title">Func</span><span class="params">(argument)</span></span>; <span class="comment">// 虚函数定义</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只要某成员函数在基类中被声明为虚函数，其派生类中的同名同参数成员函数（重写覆盖）也会是虚函数（不论在派生类中是否声明为虚函数）。</p>
+<p>使用虚函数，早捆绑的问题即可解决，示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instrument</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Instrument::play"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wind</span> :</span> <span class="keyword">public</span> Instrument</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Wind::play"</span> &lt;&lt; <span class="built_in">endl</span>; &#125; <span class="comment">/// 重写覆盖</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tune</span><span class="params">(Instrument&amp; i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    i.play(); <span class="comment">// 函数运行到这时根据i的实际类型调用对应的函数，实现了动态多态。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Wind flute;</span><br><span class="line">    tune(flute); <span class="comment">/// 向上类型转换</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际会输出“wind::play”。</p>
+<p>注意晚捆绑只对<strong>指针</strong>或者<strong>引用</strong>类型有效。</p>
+<h2 id="虚函数表"><a href="#虚函数表" class="headerlink" title="虚函数表"></a>虚函数表</h2><p>程序运行时对象要保存<strong>自身实际类型</strong>的信息，这些信息存储在<strong>虚函数表</strong>里。</p>
+<p>虚函数表：每个包含虚函数的类用于存储虚函数地址的表。</p>
+<p>每个包含虚函数的类的对象均有一个<strong>指向该类虚函数地址</strong>的指针（虚函数指针，vpointer/VPTR），当发生虚函数调用的时候通过虚函数指针获取虚函数表地址，然后在虚函数表中查询对应的虚函数实现代码的地址，以实现晚绑定。</p>
+<p>若派生类中某虚函数fun()没有进行重写覆盖，则派生类和基类中的虚函数表fun()指向同一个虚函数体。</p>
+<h2 id="虚函数与构造函数"><a href="#虚函数与构造函数" class="headerlink" title="虚函数与构造函数"></a>虚函数与构造函数</h2><p>包含虚函数的对象初始化时需要设置虚指针，虚函数指针的初始化由构造函数自动的进行，不需要程序员显式写出。需要注意的是，构造函数不能也不必要声明为虚函数。</p>
+<p>讲义之中有说明在构造函数中调用虚函数的情况，实际运行的函数会是虚函数的本地版本（当前类的版本），即虚函数多态的机制失效。因为派生类中最先进行初始化的是基类的成员，若调用实际类的虚函数可能会使用到未初始化的派生类成员，导致未定义的行为。</p>
+<p>若不理解上述原因也无所谓，尽量<strong>不要在构造函数中调用虚函数</strong>，这时虚函数的机制失效，没有实际的意义。</p>
+<h2 id="虚函数与析构函数"><a href="#虚函数与析构函数" class="headerlink" title="虚函数与析构函数"></a>虚函数与析构函数</h2><p>析构函数能声明为虚函数，且常常是虚的。</p>
+<p>虚析构函数的作用在于当删除基类类型的指针时，编译器将根据指针所指对象的<strong>实际类型</strong>来调用对应的析构函数，防止出现内存泄漏的错误。</p>
+<p>同样的，尽量<strong>不要在析构函数中调用虚函数</strong>。</p>
+<p>重要原则：<strong>总是将基类的析构函数设置为虚析构函数</strong>。</p>
+<h1 id="重写覆盖"><a href="#重写覆盖" class="headerlink" title="重写覆盖"></a>重写覆盖</h1><p>重写覆盖（override）：派生类<strong>重新定义基类中的虚函数</strong>，<strong>函数名必须相同，函数参数必须相同，返回值一般情况应相同</strong>。派生类的虚函数表中原基类的虚函数指针会被派生类中重新定义的虚函数指针覆盖掉。</p>
+<p>重写隐藏（redefining）：派生类<strong>重新定义基类中的函数</strong>，<strong>函数名相同</strong>，但是<strong>参数不同</strong>或者<strong>基类的函数不是虚函数</strong>(参数相同+虚函数-&gt;不是重写隐藏)。虚函数表不会发生覆盖。</p>
+<p>重写覆盖和重写隐藏：</p>
+<ul>
+<li>相同点：</li>
+</ul>
+<ol>
+<li><p>都要求派生类定义的函数与基类同名。</p>
+</li>
+<li><p>都会屏蔽基类中的同名函数，即派生类的实例无法调用基类的同名函数。</p>
+</li>
+</ol>
+<ul>
+<li>不同点：</li>
+</ul>
+<ol>
+<li><p>重写覆盖要求基类的函数是虚函数，且函数参数相同，返回值一般情况应相同；重写隐藏要求基类的函数不是虚函数或者函数参数不同。</p>
+</li>
+<li><p>重写覆盖会使派生类虚函数表中基类的虚函数的指针被派生类的虚函数指针覆盖。重写隐藏不会。</p>
+</li>
+</ol>
+<p>重写覆盖与重写隐藏的示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span>&lt;&lt;<span class="string">"Base::foo()"</span>&lt;&lt;<span class="built_in">endl</span>; &#125;;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>  )</span></span>&#123; <span class="built_in">cout</span>&lt;&lt;<span class="string">"Base::foo(int )"</span>&lt;&lt;<span class="built_in">endl</span>; &#125;; <span class="comment">///重载</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived1</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> )</span> </span>&#123; <span class="built_in">cout</span>&lt;&lt;<span class="string">"Derived1::foo(int )"</span>&lt;&lt;<span class="built_in">endl</span>; &#125;; <span class="comment">/// 重写覆盖</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived2</span> :</span> <span class="keyword">public</span> Base </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">float</span> )</span> </span>&#123; <span class="built_in">cout</span>&lt;&lt;<span class="string">"Derived2::foo(float )"</span>&lt;&lt;<span class="built_in">endl</span>; &#125;; <span class="comment">/// 参数不一致，不是重写覆盖，是重写隐藏</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Override关键字"><a href="#Override关键字" class="headerlink" title="Override关键字"></a>Override关键字</h2><p>重写覆盖要求的条件很多，首先必须是重定义基类中的虚函数，并且要求参数相同，可以使用override关键字显式的告诉编译器进行重写覆盖，编译器将对重写覆盖要满足的条件进行检查，正确的重写覆盖才能通过编译。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived2</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span> )</span> <span class="keyword">override</span> </span>&#123; <span class="comment">// ... &#125;; 是Base中的虚函数，并且参数一致</span></span><br><span class="line">    <span class="comment">//void foo(float ) override &#123;&#125;; /// 参数不同，不是重写覆盖，编译错误</span></span><br><span class="line">    <span class="comment">//void bar() override &#123;&#125;; /// bar 非虚函数，编译错误</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上是使用override关键字的示例。</p>
+<h2 id="final关键字"><a href="#final关键字" class="headerlink" title="final关键字"></a>final关键字</h2><p>有些时候不希望虚函数在派生类中被重写，或者不希望有些类被继承，这时可以使用final关键字。</p>
+<p>final关键字在虚函数声明或者虚函数定义时使用可以确保后续的派生类中不可以重写派生类，final关键字在类定义的时候使用会指定该类不可以被继承。示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;&#125;; <span class="comment">// 基类中声明为虚函数</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="keyword">final</span> </span>&#123; <span class="comment">/* ... */</span> &#125;  <span class="comment">// 在类A中用final指定func()， 则func()不可以被类A的派生类进行改写</span></span><br><span class="line">    <span class="comment">// void func_2() final &#123; /* ... */ &#125; /// func_2()不是虚函数，因此不能被final指定</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="title">final</span> :</span> <span class="keyword">public</span> A <span class="comment">// 将类B声明为final，即类B不能作为基类被继承</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// void func() &#123;&#125; /// func()已经在类A中声明为final了，不允许后续的类进行改写</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">class C : public B</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    // ...</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//类B已经声明为final了，不允许后续的类对类B进行继承</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>虚函数可以通过如下的形式声明为纯虚函数。</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> returnType <span class="title">func</span><span class="params">(argument)</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>含有纯虚函数的类被称为<strong>抽象类</strong>，抽象类不允许定义具体的对象，定义抽象类的主要目的是为后续的派生类规定共性的接口。</p>
+<p>纯虚函数可以在类外提供默认实现，示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Base::func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>抽象类不允许定义对象，但允许定义抽象类的指针和引用并指向派生类对象，这样就保证只有指针和引用可以被向上类型转换。</p>
+<p>当继承一个抽象类时，<strong>必须实现所有的纯虚函数</strong>，否则派生类仍然是一个抽象类，<strong>纯虚析构</strong>函数除外。</p>
+<h2 id="纯虚析构函数"><a href="#纯虚析构函数" class="headerlink" title="纯虚析构函数"></a>纯虚析构函数</h2><p>纯虚析构函数必须有函数体，即必须在抽象类的定义之外显式说明函数体。</p>
+<p>定义纯虚析构函数的目的在于使基类成为抽象类，但若基类中有其他纯虚函数，则析构函数不必定义为虚的。</p>
+<p>派生类中不需要显式实现纯虚析构函数，因为编译器可以自动合成析构函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~Base() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line">Base::~Base() &#123;&#125; <span class="comment">// 纯虚析构函数必须显式说明函数体</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> :</span> <span class="keyword">public</span> Base &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// Base b; /// 报错</span></span><br><span class="line">    A a; <span class="comment">// 没有报错，但若没有显式说明基类中纯虚析构函数的函数体，则无法通过编译（编译阶段不会报错，错误在链接阶段产生）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="向下类型转换"><a href="#向下类型转换" class="headerlink" title="向下类型转换"></a>向下类型转换</h1><p>基类指针或者引用转换为派生类指针或者引用被称为向下类型转换。要确保转换的正确性则必须借助虚函数表进行动态类型检查。示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pet</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~Pet() &#123;&#125; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> :</span> <span class="keyword">public</span> Pet</span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"dog run"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span> :</span> <span class="keyword">public</span> Pet</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"bird fly"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">action</span><span class="params">(Pet* p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> d = <span class="keyword">dynamic_cast</span>&lt;Dog*&gt;(p);	<span class="comment">/// 向下类型转换</span></span><br><span class="line">    <span class="keyword">auto</span> b = <span class="keyword">dynamic_cast</span>&lt;Bird*&gt;(p);	<span class="comment">/// 向下类型转换</span></span><br><span class="line">    <span class="keyword">if</span> (d) <span class="comment">/// 运行时根据实际类型表现特性</span></span><br><span class="line">        d-&gt;<span class="built_in">run</span>();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(b)</span><br><span class="line">        b-&gt;fly();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Pet* p[<span class="number">2</span>];</span><br><span class="line">    p[<span class="number">0</span>] = <span class="keyword">new</span> Dog; <span class="comment">/// 向上类型转换</span></span><br><span class="line">    p[<span class="number">1</span>] = <span class="keyword">new</span> Bird; <span class="comment">/// 向上类型转换</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        action(p[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>C++提供了一种安全的向下类型转换，即<strong>dynamic_cast</strong>，使用dynamic_cast必须有虚函数，因为它使用了存储在虚函数表中的信息判断实际的类型。</p>
+<p>使用方法为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// T1* obj_p = .....</span></span><br><span class="line"><span class="comment">// T1&amp; obj_r = .....</span></span><br><span class="line">T2* pObj = <span class="keyword">dynamic_cast</span>&lt;T2*&gt;(obj_p); <span class="comment">//转换为T2指针，运行时失败返回nullptr</span></span><br><span class="line">T2&amp; refObj = <span class="keyword">dynamic_cast</span>&lt;T2&amp;&gt;(obj_r); <span class="comment">//转换为T2引用，运行时失败抛出bad_cast异常</span></span><br></pre></td></tr></table></figure>
+
+<p>要注意的是T1必须是带有虚函数（声明或者继承而来的）的类（T1必须是多态类型），否则编译会报错，T2不必是带有虚函数的类。T1，T2没有继承关系时转换会出错。</p>
+<p>如果知道要转换的类型种类，可以使用<strong>static_ cast</strong>，static_cast在编译时静态浏览类层次，只检查继承关系。没有继承关系的类之间，必须具有转换途径才能进行转换（要么自定义，要么是语言语法支持），否则不过编译。运行时无法确认是否正确转换。</p>
+<p>使用方法为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// T1* obj_p = .....</span></span><br><span class="line"><span class="comment">// T1&amp; obj_r = .....</span></span><br><span class="line">T2* pObj = <span class="keyword">static_cast</span>&lt;T2*&gt;(obj_p); <span class="comment">//转换为T2指针</span></span><br><span class="line">T2&amp; refObj = <span class="keyword">static_cast</span>&lt;T2&amp;&gt;(obj_r); <span class="comment">//转换为T2引用</span></span><br></pre></td></tr></table></figure>
+
+<p>static_cast不会做类型检查，因此不能保证转换后实际指向的对象类型为T2。</p>
+<p>一般来说，建议使用dynamic_cast来进行向下类型转换。</p>
+<ul>
+<li>几条重要的原则</li>
+</ul>
+<ol>
+<li>指针或者引用的向上类型转换总是安全的。</li>
+<li>向下类型转换时尽量使用dynamic_cast。</li>
+<li>尽量不做对象的转换。</li>
+</ol>
+<h2 id="向上向下类型转换与虚函数表"><a href="#向上向下类型转换与虚函数表" class="headerlink" title="向上向下类型转换与虚函数表"></a>向上向下类型转换与虚函数表</h2><p>若基类中含有虚函数：</p>
+<p>对于向上类型转换，派生类指针或者引用转换为基类指针或者引用，其虚函数表仍然绑定为派生类的虚函数表（晚绑定）。派生类对象转换为基类对象，则其虚函数表绑定为基类的虚函数表。</p>
+<p>对于向下类型转换则可以通过检查虚函数表来判断是否可以进行向下类型转换。</p>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>以上所说的概念均是为多态所服务的，多态指的是：按照基类的接口定义，调用指针或引用所指对象的接口函数，函数执行过程因对象<strong>实际</strong>所属派生类的不同而呈现不同的效果（表现）。</p>
+<p>当利用指针或者引用调用函数时，虚函数在运行时才确定具体的函数实现代码，取决于所指向对象的真实类型（晚绑定）。非虚函数在编译时就已进行绑定（早绑定）。</p>
+<p>当利用对象作为参数直接调用函数时，无论什么函数均在编译时进行绑定。</p>
+<p>所以产生多态的效果为：继承 &amp;&amp; 虚函数 &amp;&amp; （引用或指针）</p>
+<p>多态使得C++语言可以用一段相同的代码，在运行时完成不同的任务，这些不同运行结果的差异由派生类之间的差异决定。好处在于通过基类定好接口后，不必对每一个派生类特殊处理，只需要调用抽象基类的接口即可。大大提高程序的可复用性。不同派生类对同一接口的实现不同，能达到不同的效果，提高了程序可拓展性和可维护性。</p>
+<p>一个多态的示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">action</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">	      speak();</span><br><span class="line">	      motion();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Animal speak"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">motion</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Animal motion"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bird</span> :</span> <span class="keyword">public</span> Animal</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Bird singing"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">motion</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Bird flying"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fish</span> :</span> <span class="keyword">public</span> Animal</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">speak</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Fish cannot speak ..."</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">motion</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Fish swimming"</span> &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Fish fish;</span><br><span class="line">    Bird bird;</span><br><span class="line">    fish.action();	 <span class="comment">///不同调用方法</span></span><br><span class="line">    bird.action();</span><br><span class="line"></span><br><span class="line">    Animal *pBase1 = <span class="keyword">new</span> Fish;</span><br><span class="line">    Animal *pBase2 = <span class="keyword">new</span> Bird;</span><br><span class="line">    pBase1-&gt;action(); <span class="comment">///同一调用方法，根据</span></span><br><span class="line">    pBase2-&gt;action(); <span class="comment">///实际类型完成相应动作 </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多态的一个典型应用就是TEMPLATE METHOD设计模式。</p>
+<ul>
+<li>在接口的一个方法中定义算法的骨架。</li>
+<li>将一些步骤的实现延迟到子类中。</li>
+<li>使得子类可以在不改变算法结构的情况下，重新定义算法中的某些步骤。</li>
+</ul>
+<h1 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h1><p>一个类同时继承多个类称为多重继承。多重继承会有多个虚函数表，几重继承，就会有几个虚函数表。这些表按照派生的顺序依次排列。</p>
+<p>如果子类改写了父类的虚函数，那么就会用子类自己的虚函数覆盖虚函数表的相应位置，如果子类有新的虚函数，那么就添加到第一个虚函数表的末尾。</p>
+<p>多重继承的可以同时结合多个接口，但会导致二义性的问题，即派生类继承的两个基类若含有同名成员，则会导致编译器无法判断。另外一个问题则是钻石型继承带来的数据冗余问题。</p>
+<p> 实践中，最好只继承一个非抽象类，可以继承多个抽象类。</p>
+<h1 id="OOP核心思想"><a href="#OOP核心思想" class="headerlink" title="OOP核心思想"></a>OOP核心思想</h1><p>OOP的核心思想是<strong>数据抽象、继承与动态绑定</strong>。</p>
+<ul>
+<li><p>数据抽象：类的接口与实现分离</p>
+</li>
+<li><p>继承：建立相关类型的层次关系（基类与派生类）<br>函数重写，虚函数</p>
+</li>
+<li><p>动态绑定：统一使用基类指针，实现多态行为<br>类型转换，模板</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/09/OOP-THU-5/" rel="prev" title="面向对象_组合与继承">
+      <i class="fa fa-chevron-left"></i> 面向对象_组合与继承
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
