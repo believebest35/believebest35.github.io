@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -194,6 +194,150 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/13/OOP-THU-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/13/OOP-THU-7/" class="post-title-link" itemprop="url">面向对象_模版和STL初步</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-13 10:31:17 / 修改时间：19:05:34" itemprop="dateCreated datePublished" datetime="2020-10-13T10:31:17+08:00">2020-10-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="函数模板和类模板"><a href="#函数模板和类模板" class="headerlink" title="函数模板和类模板"></a>函数模板和类模板</h1><p>继承和组合提供了重用对象代码的方法，而模板特征则提供了重用源代码的方法。</p>
+<p>首先考虑下面的一个问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> *data, <span class="keyword">int</span> len)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">float</span> *data, <span class="keyword">int</span> len)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(my_class *data, <span class="keyword">int</span> len)</span></span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>以上的排序算法的实现细节是一致的，仅仅只有数据（对象）的类型不同，因此有必要通过某种方式来重用代码。因此需要引入模板特征。模板可以分为：</p>
+<ul>
+<li>函数模板</li>
+<li>类模板</li>
+<li>成员函数模板</li>
+</ul>
+<h2 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h2><p>有些函数的实现与类型无关，因此可以将类型设置为一种特殊的“参数”，这样就可以得到函数模板。</p>
+<p>定义函数模板的方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; returnType</span><br><span class="line">Func(Args)</span><br></pre></td></tr></table></figure>
+
+<p>returnType表示函数模板将会返回的类型，也可以写成template表示的，说明返回的类型也不确定。</p>
+<p>简单的相加函数模板就可以定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">sum</span><span class="params">(T a, T b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数模板在实际调用时会根据调用参数的实际类型实例化为一个普通函数，但是需要实际的类型能够满足函数的运算要求，例如上例中要求对象类型可以进行加法运算。</p>
+<p>也可以同时指定多个模版参数，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;</span><br><span class="line"><span class="function">T1 <span class="title">sum</span><span class="params">(T1 a, T2, b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上要求两个类型之间可以进行相加并可进行类型转换。</p>
+<p>可以手动指定调用类型</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; sum&lt;<span class="keyword">int</span>&gt;(<span class="number">1</span> + <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类模版"><a href="#类模版" class="headerlink" title="类模版"></a>类模版</h2><p>在定义类时也可以用一些模板参数使得类更具有通用性，示例如下：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_1</span><span class="params">()</span> </span>&#123; <span class="built_in">cout</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_2</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">void</span> A&lt;T&gt;::func_2()  <span class="comment">// 模版类成员函数的类外定义，模版声明必须加上，否则编译报错</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; data &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A&lt;<span class="keyword">int</span>&gt; a;</span><br><span class="line">    a.func_1();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类模版的参数：</p>
+<ul>
+<li>类型参数：使用typename或class进行标记</li>
+<li>非类型参数：整数，枚举，指针（指向对象或函数），引用（引用对象或引用函数）等，其中整数用的比较多。示例：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">unsigned</span> <span class="built_in">size</span>&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">array</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    T data[<span class="built_in">size</span>];</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">array</span>&lt;<span class="keyword">int</span>, 10&gt; arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="成员函数模板"><a href="#成员函数模板" class="headerlink" title="成员函数模板"></a>成员函数模板</h2><p>普通类的成员函数也可以定义函数模，示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">normal_class</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">  	<span class="comment">/// 在类内定义   </span></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(T <span class="keyword">const</span>&amp; v)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        value = <span class="keyword">int</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">    <span class="function">T <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;        <span class="comment">/// 在类外定义</span></span><br><span class="line"><span class="function">T <span class="title">normal_class::get</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> T(value); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>既可以在类中定义，也可以在类外进行定义。</p>
+<p>普通类模板的成员函数，也可有额外的模板参数。示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T0&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    T0 value; </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/// 在类内定义 </span></span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1&gt;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(T1 <span class="keyword">const</span>&amp; v)</span></span></span><br><span class="line"><span class="function">    </span>&#123; </span><br><span class="line">        value = T0(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1&gt;</span><br><span class="line">    <span class="function">T1 <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 类外定义</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T0&gt; <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1&gt; <span class="comment">// 后面的template&lt;typename T1&gt;表示该函数的返回类型不确定</span></span><br><span class="line">T1 A&lt;T0&gt;::<span class="built_in">get</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> T1(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 注意以下写法是错误的</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">template&lt;typename T0, typename T1&gt; </span></span><br><span class="line"><span class="comment">T1 A&lt;T0&gt;::get()</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    return T1(value);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ul>
+<li>多个参数的类模板：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T0, <span class="keyword">typename</span> T1&gt; </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多个参数的函数模板</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T0, <span class="keyword">typename</span> T1&gt; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">( T0 a1, T1 a2 )</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数模板特化"><a href="#函数模板特化" class="headerlink" title="函数模板特化"></a>函数模板特化</h2><p>有些类型当前的函数模板不能进行处理，因此需要对模版进行特殊化处理，这称为函数模板特化。函数模板特化需要提供所有模板参数的具体类型，不能进行部分特化，若要部分特化，则需要另开模板并重载。下面举一个栗子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  泛型版本</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt; </span></span><br><span class="line"><span class="class"><span class="title">int</span> <span class="title">compare</span>(<span class="title">const</span> <span class="title">T</span> &amp;<span class="title">v1</span>, <span class="title">const</span> <span class="title">T</span> &amp;<span class="title">v2</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">if</span>(v1 &lt; v2) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(v2 &gt; v1) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当实际参数为两个char型指针时，若要求比较的是<strong>char型指针指向内容的大小</strong>而不是地址大小，需要对上述函数模板进行特化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 特化版本</span></span><br><span class="line"><span class="keyword">template</span> &lt;&gt; <span class="keyword">int</span> compare&lt;<span class="keyword">const</span> <span class="keyword">char</span> *&gt;(<span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> &amp;v1, <span class="keyword">const</span> <span class="keyword">char</span> * <span class="keyword">const</span> &amp;v2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">strcmp</span>(v1, v2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 远离C风格字符串。。。</span></span><br></pre></td></tr></table></figure>
+
+<p>函数特化的另外一个栗子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">div2</span><span class="params">(<span class="keyword">const</span> T &amp;val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> val / <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="keyword">int</span> div2&lt;<span class="keyword">int</span>&gt;(<span class="keyword">const</span> <span class="keyword">int</span> &amp;val)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> val &gt;&gt; <span class="number">1</span>; <span class="comment">// 整型除法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类模板特化"><a href="#类模板特化" class="headerlink" title="类模板特化"></a>类模板特化</h2><p>对于类模板，允许部分特化，即部分限制模板的通用性，如通用模板为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt; <span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span> ... &#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>部分特化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1&gt; <span class="class"><span class="keyword">class</span> <span class="title">A</span>&lt;T1, int&gt; &#123;</span>...&#125;; <span class="comment">//指定第二个参数为int</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>全部特化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">A</span>&lt;int, int&gt; &#123;</span> ... &#125;; <span class="comment">// 指定了所有参数</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="模板原理"><a href="#模板原理" class="headerlink" title="模板原理"></a>模板原理</h2><p>对于模板的处理是在编译时进行的，编译器每发现一个模板示例，就生成对应的代码。</p>
+<p>需要注意的是，模板库必须在头文件中进行实现，不可以分开进行编译，因为若分开，则编译器不知道具体的函数模板实例如何初始化，会产生链接错误。</p>
+<h1 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h1><p>为了避免在大规模程序的设计中，以及在程序员使用各种各样的C++库时，标识符的命名发生冲突，标准C++引入了关键字namespace（命名空间），可以更好地控制标识符的作用域。</p>
+<p>标准C++库（不包括标准C库）中所包含的所有内容（包括常量、变量、结构、类和函数等）都被定义在命名空间std（standard标准）中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义命名空间</span></span><br><span class="line"><span class="keyword">namespace</span> A</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> x, y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用命名空间</span></span><br><span class="line">A::x = <span class="number">3</span>;</span><br><span class="line">A::y = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接使用部分元素</span></span><br><span class="line"><span class="keyword">using</span> A::x;</span><br><span class="line">x = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用整个命名空间</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> A;</span><br><span class="line">x = <span class="number">3</span>;</span><br><span class="line">y = <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h1><p>标准模板库，其中包含4个组件，分别为算法、容器、函数、迭代器。基于模板进行编写。</p>
+<p>关键理念：将“在数据上执行的操作”与“要执行操作的数据”分离。</p>
+<p>STL的命名空间为std。</p>
+<p>关于STL中具体容器的介绍可直接查看文档。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1452,92 +1596,6 @@
 [2,2,1]</code></pre><p>输出: 4<br>解释: 最长递增路径是 [3, 4, 5, 6]。注意不允许在对角线方向上移动。</p>
 <h3 id="方法：DFS"><a href="#方法：DFS" class="headerlink" title="方法：DFS"></a>方法：DFS</h3><p>这道题明显可以用dfs来写，不过最朴素的dfs（不带剪枝）会超时，因此需要简单的剪枝。或者可以写成记忆化递归的形式。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> m, n;</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;matrix, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;dp, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x &gt;= <span class="number">1</span> &amp;&amp; matrix[x - <span class="number">1</span>][y] &gt; matrix[x][y] &amp;&amp; dp[x - <span class="number">1</span>][y] &lt; dp[x][y] + <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[x - <span class="number">1</span>][y] = dp[x][y] + <span class="number">1</span>;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, dp[x - <span class="number">1</span>][y]);</span><br><span class="line">            dfs(matrix, dp, x - <span class="number">1</span>, y);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (x &lt; m - <span class="number">1</span> &amp;&amp; matrix[x + <span class="number">1</span>][y] &gt; matrix[x][y] &amp;&amp; dp[x + <span class="number">1</span>][y] &lt; dp[x][y] + <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[x + <span class="number">1</span>][y] = dp[x][y] + <span class="number">1</span>;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, dp[x + <span class="number">1</span>][y]);</span><br><span class="line">            dfs(matrix, dp, x + <span class="number">1</span>, y);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (y &gt;= <span class="number">1</span> &amp;&amp; matrix[x][y - <span class="number">1</span>] &gt; matrix[x][y] &amp;&amp; dp[x][y - <span class="number">1</span>] &lt; dp[x][y] + <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[x][y - <span class="number">1</span>] = dp[x][y] + <span class="number">1</span>;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, dp[x][y - <span class="number">1</span>]);</span><br><span class="line">            dfs(matrix, dp, x, y - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (y &lt; n - <span class="number">1</span> &amp;&amp; matrix[x][y + <span class="number">1</span>] &gt; matrix[x][y] &amp;&amp; dp[x][y + <span class="number">1</span>] &lt; dp[x][y] + <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[x][y + <span class="number">1</span>] = dp[x][y] + <span class="number">1</span>;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, dp[x][y + <span class="number">1</span>]);</span><br><span class="line">            dfs(matrix, dp, x, y + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestIncreasingPath</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m = matrix.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (m == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        ans = <span class="number">1</span>;</span><br><span class="line">        n = matrix[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">1</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">                dfs(matrix, dp, i, j);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/07/25/leetcode-solution-5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xinrui Tang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/25/leetcode-solution-5/" class="post-title-link" itemprop="url">leetcode 322 零钱兑换 and leetcode 410 分割数组的最大值</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-07-25 16:03:33 / 修改时间：16:32:37" itemprop="dateCreated datePublished" datetime="2020-07-25T16:03:33+08:00">2020-07-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Leetcode-322-零钱兑换"><a href="#Leetcode-322-零钱兑换" class="headerlink" title="Leetcode 322 零钱兑换"></a>Leetcode 322 零钱兑换</h1><p><a href="https://leetcode-cn.com/problems/coin-change/" target="_blank" rel="noopener">leetcode 322</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: coins = [1, 2, 5], amount = 11<br>输出: 3<br>解释: 11 = 5 + 5 + 1</p>
-<p>输入: coins = [2], amount = 3<br>输出: -1</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>你可以认为每种硬币的数量是无限的。</p>
-<h3 id="方法一：DFS"><a href="#方法一：DFS" class="headerlink" title="方法一：DFS"></a>方法一：DFS</h3><p>这是一道典型的可以用dfs来做的题，但。。。他T了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;coins, <span class="keyword">int</span> amount, <span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (amount == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (ans == <span class="number">-1</span>)</span><br><span class="line">                ans = count;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ans = <span class="built_in">min</span>(ans, count);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (amount &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = coins.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            dfs(coins, amount - coins[i], count + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// sort(coins.begin(), coins.end());</span></span><br><span class="line">        ans = <span class="number">-1</span>;</span><br><span class="line">        dfs(coins, amount, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法二：DP"><a href="#方法二：DP" class="headerlink" title="方法二：DP"></a>方法二：DP</h3><p>DP状态很好设置，dp[i]即表示组成金额为i的所需最小金币个数，其中初始化如下：</p>
-<ul>
-<li>dp[0] = 0</li>
-<li>若i = 某硬币面值，则dp[i] = 1;</li>
-<li>其余均初始化为-1</li>
-</ul>
-<p>状态转移过程直接写在代码里了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sort(coins.<span class="built_in">begin</span>(), coins.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">if</span> (amount &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(amount + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; coins.<span class="built_in">size</span>(); i++)</span><br><span class="line">            <span class="keyword">if</span> (coins[i] &lt;= amount)</span><br><span class="line">                dp[coins[i]] = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[i] == <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.<span class="built_in">size</span>(); j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (i - coins[j] &gt;= <span class="number">0</span> &amp;&amp; dp[i - coins[j]] != <span class="number">-1</span>)</span><br><span class="line">                    dp[i] = (dp[i] == <span class="number">-1</span>) ? (dp[i - coins[j]] + <span class="number">1</span>) : <span class="built_in">min</span>(dp[i], dp[i - coins[j]] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[amount];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Leetcode-410-分割数组的最大值"><a href="#Leetcode-410-分割数组的最大值" class="headerlink" title="Leetcode 410 分割数组的最大值"></a>Leetcode 410 分割数组的最大值</h1><p><a href="https://leetcode-cn.com/problems/split-array-largest-sum/" target="_blank" rel="noopener">leetcode 419</a></p>
-<h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个非负整数数组和一个整数 m，你需要将这个数组分成 m 个非空的连续子数组。设计一个算法使得这 m 个子数组各自和的最大值最小。</p>
-<p>注意:<br>数组长度 n 满足以下条件:</p>
-<ul>
-<li>1 ≤ n ≤ 1000</li>
-<li>1 ≤ m ≤ min(50, n)</li>
-</ul>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>输入:<br>nums = [7,2,5,10,8]<br>m = 2</p>
-<p>输出:<br>18</p>
-<p>解释:<br>一共有四种方法将nums分割为2个子数组。<br>其中最好的方式是将其分为[7,2,5] 和 [10,8]，<br>因为此时这两个子数组各自的和的最大值为18，在所有情况中最小。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>动态规划，dp[i][j]表示前i个数被分为j段后的所有方案中各个子数组和最大值的最小值。。求前缀和比较亮眼。。。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">splitArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt; <span class="title">pre_sum</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        pre_sum[<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            pre_sum[i + <span class="number">1</span>] = pre_sum[i] + nums[i];</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;(m + <span class="number">1</span>, LLONG_MAX))</span></span>;</span><br><span class="line">        <span class="comment">//dp[i][j]表示前i个数被分为j段后各个子数组和最大值的最小值。。</span></span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="built_in">min</span>(m, i); j++)</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; i; k++)</span><br><span class="line">                    dp[i][j] = <span class="built_in">min</span>(dp[i][j], <span class="built_in">max</span>(dp[k][j - <span class="number">1</span>], pre_sum[i] - pre_sum[k]));</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> dp[n][m];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
     </div>
 
