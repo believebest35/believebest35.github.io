@@ -19,13 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="这里是我写一些无聊的东西的地方">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Xinrui Tang">
 <meta property="og:url" content="http://believebest35.github.io/page/2/index.html">
 <meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="这里是我写一些无聊的东西的地方">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Xinrui Tang">
 <meta name="twitter:card" content="summary">
@@ -150,7 +152,7 @@
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Xinrui Tang</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
@@ -203,7 +205,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -221,10 +223,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-25 16:03:33 / 修改时间：16:32:37" itemprop="dateCreated datePublished" datetime="2020-07-25T16:03:33+08:00">2020-07-25</time>
+              <time title="创建时间：2020-07-25 16:03:33" itemprop="dateCreated datePublished" datetime="2020-07-25T16:03:33+08:00">2020-07-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 20:27:06" itemprop="dateModified" datetime="2020-10-13T20:27:06+08:00">2020-10-13</time>
+              </span>
 
           
 
@@ -241,31 +249,14 @@
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: coins = [1, 2, 5], amount = 11<br>输出: 3<br>解释: 11 = 5 + 5 + 1</p>
 <p>输入: coins = [2], amount = 3<br>输出: -1</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>你可以认为每种硬币的数量是无限的。</p>
-<h3 id="方法一：DFS"><a href="#方法一：DFS" class="headerlink" title="方法一：DFS"></a>方法一：DFS</h3><p>这是一道典型的可以用dfs来做的题，但。。。他T了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;coins, <span class="keyword">int</span> amount, <span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (amount == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (ans == <span class="number">-1</span>)</span><br><span class="line">                ans = count;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ans = <span class="built_in">min</span>(ans, count);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (amount &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = coins.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            dfs(coins, amount - coins[i], count + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// sort(coins.begin(), coins.end());</span></span><br><span class="line">        ans = <span class="number">-1</span>;</span><br><span class="line">        dfs(coins, amount, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法二：DP"><a href="#方法二：DP" class="headerlink" title="方法二：DP"></a>方法二：DP</h3><p>DP状态很好设置，dp[i]即表示组成金额为i的所需最小金币个数，其中初始化如下：</p>
-<ul>
-<li>dp[0] = 0</li>
-<li>若i = 某硬币面值，则dp[i] = 1;</li>
-<li>其余均初始化为-1</li>
-</ul>
-<p>状态转移过程直接写在代码里了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; coins, <span class="keyword">int</span> amount)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        sort(coins.<span class="built_in">begin</span>(), coins.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">if</span> (amount &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(amount + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; coins.<span class="built_in">size</span>(); i++)</span><br><span class="line">            <span class="keyword">if</span> (coins[i] &lt;= amount)</span><br><span class="line">                dp[coins[i]] = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[i] == <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.<span class="built_in">size</span>(); j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (i - coins[j] &gt;= <span class="number">0</span> &amp;&amp; dp[i - coins[j]] != <span class="number">-1</span>)</span><br><span class="line">                    dp[i] = (dp[i] == <span class="number">-1</span>) ? (dp[i - coins[j]] + <span class="number">1</span>) : <span class="built_in">min</span>(dp[i], dp[i - coins[j]] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[amount];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Leetcode-410-分割数组的最大值"><a href="#Leetcode-410-分割数组的最大值" class="headerlink" title="Leetcode 410 分割数组的最大值"></a>Leetcode 410 分割数组的最大值</h1><p><a href="https://leetcode-cn.com/problems/split-array-largest-sum/" target="_blank" rel="noopener">leetcode 419</a></p>
-<h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个非负整数数组和一个整数 m，你需要将这个数组分成 m 个非空的连续子数组。设计一个算法使得这 m 个子数组各自和的最大值最小。</p>
-<p>注意:<br>数组长度 n 满足以下条件:</p>
-<ul>
-<li>1 ≤ n ≤ 1000</li>
-<li>1 ≤ m ≤ min(50, n)</li>
-</ul>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>输入:<br>nums = [7,2,5,10,8]<br>m = 2</p>
-<p>输出:<br>18</p>
-<p>解释:<br>一共有四种方法将nums分割为2个子数组。<br>其中最好的方式是将其分为[7,2,5] 和 [10,8]，<br>因为此时这两个子数组各自的和的最大值为18，在所有情况中最小。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>动态规划，dp[i][j]表示前i个数被分为j段后的所有方案中各个子数组和最大值的最小值。。求前缀和比较亮眼。。。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">splitArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt; <span class="title">pre_sum</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        pre_sum[<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">            pre_sum[i + <span class="number">1</span>] = pre_sum[i] + nums[i];</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">long</span> <span class="keyword">long</span>&gt;(m + <span class="number">1</span>, LLONG_MAX))</span></span>;</span><br><span class="line">        <span class="comment">//dp[i][j]表示前i个数被分为j段后各个子数组和最大值的最小值。。</span></span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="built_in">min</span>(m, i); j++)</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; i; k++)</span><br><span class="line">                    dp[i][j] = <span class="built_in">min</span>(dp[i][j], <span class="built_in">max</span>(dp[k][j - <span class="number">1</span>], pre_sum[i] - pre_sum[k]));</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> dp[n][m];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/25/leetcode-solution-5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -289,7 +280,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -307,10 +298,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-24 15:54:08 / 修改时间：16:06:57" itemprop="dateCreated datePublished" datetime="2020-07-24T15:54:08+08:00">2020-07-24</time>
+              <time title="创建时间：2020-07-24 15:54:08" itemprop="dateCreated datePublished" datetime="2020-07-24T15:54:08+08:00">2020-07-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 20:27:17" itemprop="dateModified" datetime="2020-10-13T20:27:17+08:00">2020-10-13</time>
+              </span>
 
           
 
@@ -331,13 +328,14 @@
 <li>用 N - x 替换黑板上的数字 N 。<br>如果玩家无法执行这些操作，就会输掉游戏。</li>
 </ul>
 <p>只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入：2<br>输出：true<br>解释：爱丽丝选择 1，鲍勃无法进行操作。</p>
-<p>输入：3<br>输出：false<br>解释：爱丽丝选择 1，鲍勃也选择 1，然后爱丽丝无法进行操作。</p>
-<h3 id="方法一：动态规划"><a href="#方法一：动态规划" class="headerlink" title="方法一：动态规划"></a>方法一：动态规划</h3><p>如果不想动脑就无脑动态规划。。。设dp[i]表示数字为i时先手是否必赢。数字为i时的必胜是从先前某一必败态所转移来的，因此转移方程可以写为：<br>dp[i] = true if dp[i - j] = false exists (j为i因子)<br>or dp[i] = false</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; <span class="title">dp</span><span class="params">(N + <span class="number">1</span>, <span class="literal">false</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="literal">false</span>, dp[<span class="number">2</span>] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= N; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; j++)</span><br><span class="line">                <span class="keyword">if</span> (i % j == <span class="number">0</span> &amp;&amp; !dp[i - j])</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i] = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[N];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法二：数学规律"><a href="#方法二：数学规律" class="headerlink" title="方法二：数学规律"></a>方法二：数学规律</h3><p>额，直接才想N能不能被2整除，能整除就返回true，否则false。证明可用数学归纳法。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> N % <span class="number">2</span> == <span class="number">0</span>；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/24/leetcode-solution-4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -361,7 +359,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -387,7 +385,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-24 15:53:54" itemprop="dateModified" datetime="2020-07-24T15:53:54+08:00">2020-07-24</time>
+                <time title="修改时间：2020-10-13 20:27:26" itemprop="dateModified" datetime="2020-10-13T20:27:26+08:00">2020-10-13</time>
               </span>
 
           
@@ -405,15 +403,14 @@
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: [1,3,4,2,2]<br>输出: 2</p>
 <p>输入: [3,1,3,4,2]<br>输出: 3</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>不能更改原数组（假设数组是只读的）。</li>
-<li>只能使用额外的 O(1) 的空间。</li>
-<li>时间复杂度小于 O(n^2) 。</li>
-<li>数组中只有一个重复的数字，但它可能不止重复出现一次。</li>
-</ul>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>这道题如果没有说明里的条件的话是非常容易的，可以排序，或者哈希，但是排序修改了原数组，哈希需要O(n)的空间。另外如果没有第一个条件的话可以考虑使用原地哈希。</p>
-<p>以上的方法不能使用，因此实际做的时候用的是二分，不过不是对下标进行二分，而是对值域进行二分。最开始范围取到1～n，mid = (1 + n) / 2，每次分别统计小于mid，等于mid以及大于mid的个数，据此缩小空间。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>, j = n;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> less_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> large_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> count_k = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> mid = i + (j - i) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums)</span><br><span class="line">                <span class="keyword">if</span> (num == mid)</span><br><span class="line">                    count_k++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (num &lt; mid)</span><br><span class="line">                    less_k++;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    large_k++;</span><br><span class="line">            <span class="keyword">if</span> (count_k &gt;= <span class="number">2</span>)</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">if</span> (less_k &gt; mid - <span class="number">1</span>)</span><br><span class="line">                j = mid - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                i = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i; <span class="comment">// 题目数据保证，不会在这退出。。。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/23/leetcode-solution-3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -437,7 +434,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -455,10 +452,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-23 11:21:30 / 修改时间：11:35:45" itemprop="dateCreated datePublished" datetime="2020-07-23T11:21:30+08:00">2020-07-23</time>
+              <time title="创建时间：2020-07-23 11:21:30" itemprop="dateCreated datePublished" datetime="2020-07-23T11:21:30+08:00">2020-07-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 20:28:30" itemprop="dateModified" datetime="2020-10-13T20:28:30+08:00">2020-10-13</time>
+              </span>
 
           
 
@@ -478,41 +481,14 @@
 <p>所以变长数组尽可能减少申请次数。一开始申请一定空间的大小，当超过容量时，申请长度变为二倍的空间，然后将原始空间的元素copy过来。</p>
 <p>当初始化的时候不指定空间大小，但是使用的空间有非常大之后需要多次扩容，那么扩容需要的时间复杂度是O(N)</p>
 <p>相当于插入一个元素就需要将O(1)的时间。申请空间的次数是O(log n)。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a;   <span class="comment">// 定义一个vecotr</span></span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">a</span><span class="params">(<span class="number">10</span>)</span></span>;  <span class="comment">// 初始长度为10；</span></span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">a</span><span class="params">(<span class="number">10</span>, <span class="number">3</span>)</span></span>;  <span class="comment">// 初始长度为10， 且每个元素初始化为3</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> i : a) <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span>;  <span class="comment">// 遍历元素的方式  ， auto 关键字，系统自动推断变量类型，变量名比较长的时候可以使用</span></span><br><span class="line">  </span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a[<span class="number">10</span>];  <span class="comment">// 定义了vector数组，每个元素都是一个vector&lt;int&gt;</span></span><br><span class="line">  </span><br><span class="line">  a.<span class="built_in">size</span>();  <span class="comment">// 返回列表里的元素的个数</span></span><br><span class="line">  a.empty();  <span class="comment">//  返回列表是不是空</span></span><br><span class="line">  <span class="comment">// size() 和empty() 是所有容器都有的，时间复杂度是o(1)</span></span><br><span class="line">  </span><br><span class="line">  a.<span class="built_in">clear</span>();  <span class="comment">// 清空，不是所有的容器都有</span></span><br><span class="line">  </span><br><span class="line">  a.front(); <span class="comment">// 返回第一个元素</span></span><br><span class="line">  a.back();  <span class="comment">// 返回最后一个元素</span></span><br><span class="line">  a.push_back(); <span class="comment">// 从最后插入一个元素</span></span><br><span class="line">  a.pop_back(); <span class="comment">// 删除最后一个元素</span></span><br><span class="line">  a.<span class="built_in">begin</span>();  a.<span class="built_in">end</span>(); <span class="comment">// 迭代器。  可以看做指针，可以解引用</span></span><br><span class="line">  a[<span class="number">2</span>];   <span class="comment">// 支持随机寻址，与数组相同</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 三种遍历方式</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>(); i ++) <span class="built_in">cout</span> &lt;&lt; a[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator i = a.<span class="built_in">begin</span>(); i != a.<span class="built_in">end</span>(); i ++) <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> i = a.<span class="built_in">begin</span>(); i != a.<span class="built_in">end</span>(); i ++) <span class="built_in">cout</span> &lt;&lt; *i &lt;&lt; <span class="string">" "</span>;  <span class="comment">// 迭代器，解引用</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> x : a) <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="string">" "</span>;   <span class="comment">// auto关键字自动推断类型</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//  vector支持比较，按位进行字典序比较</span></span><br><span class="line">  vector&lt;int&gt; a(4, 3), b(3, 4);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; (a &lt; b);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a>pair</h3><p>元组类型，相当于Python中的().</p>
-<p>当一个元素有多个属性的时候，可以使用pair来进行存储。当需要按照某个属性来排序的时候，就非常好。</p>
-<p>比如合并区间的问题。每个区间有开始和结尾两个属性，然后需要按照区间的开始对区间进行排序。</p>
-<p>可以看做实现了一个结构体，且实现了比较器。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 两种初始化方法</span></span><br><span class="line">pair&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; p;</span><br><span class="line">p = make_pair(<span class="number">10</span>, <span class="string">"aa"</span>);</span><br><span class="line">p = &#123;q, <span class="string">"ab"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 支出比较运算，first为第一关键字，second为第二关键字</span></span><br><span class="line">pair&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; p = &#123;<span class="number">1</span>, <span class="string">"aa"</span>&#125;;</span><br><span class="line">pair&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; q = &#123;<span class="number">1</span>, <span class="string">"ab"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// first取出第一个字， second取出第二个字</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p.first &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p.second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (p &lt; q) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以使用pair存储三个属性等; pair 嵌套pair</span></span><br><span class="line">pair&lt;<span class="keyword">int</span>, pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; p;</span><br><span class="line"><span class="built_in">string</span></span><br><span class="line">字符串，substr(), c_str()</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s = <span class="string">"a"</span>;  </span><br><span class="line">s += <span class="string">"ab"</span>;  <span class="comment">// 支持增量操作</span></span><br><span class="line">s += <span class="string">'a'</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.substr(<span class="number">1</span>, <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 可以取出某个子串，第一个是起始index，第二个是长度。第二个缺省或者超过范围则返回之后的左右字符串</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.substr(<span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s.substr(<span class="number">1</span>, <span class="number">100</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>, s.c_str());  <span class="comment">// 使用printf输出的时候，需要找到存储字符串数组的起始地址。c_str()可以返回</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">size</span>()  | length()   <span class="comment">// 返回字符串的长度</span></span><br><span class="line">  </span><br><span class="line">s.<span class="built_in">find</span>(<span class="string">'a'</span>); <span class="comment">// 返回a在s中的位置,如果没找到，返回一个特别的标志c++中用npos表示(可以用s.npos)来表示</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><p>队列，push(), front() , pop(),back()</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// push() 向队尾插入一个元素</span></span><br><span class="line"><span class="comment">// front()  返回队头元素</span></span><br><span class="line"><span class="comment">// pop() 返回队尾元素</span></span><br><span class="line"><span class="comment">// back() 弹出队头元素</span></span><br><span class="line"><span class="comment">// size() </span></span><br><span class="line"><span class="comment">// empty()</span></span><br><span class="line"><span class="comment">// 没有clear操作</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h3><p>优先队列，push(), top(), pop()</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内部使用堆维护</span></span><br><span class="line"><span class="comment">// 默认是大顶堆，和python相反</span></span><br><span class="line"><span class="comment">// 使用小顶对方法</span></span><br><span class="line"><span class="comment">// 1. 在插入的时候插入元素的相反数即可</span></span><br><span class="line"><span class="comment">// 2. 如下定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;csting&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; heap;</span><br><span class="line"></span><br><span class="line"><span class="comment">// priority_queue&lt;int&gt; q;   // 大顶堆</span></span><br><span class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; q;  <span class="comment">// 小顶堆</span></span><br><span class="line">q.push(<span class="number">1</span>);</span><br><span class="line">q.push(<span class="number">2</span>);</span><br><span class="line">q.push(<span class="number">5</span>);</span><br><span class="line">q.push(<span class="number">10</span>);</span><br><span class="line"><span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; q.top() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  q.pop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><p>栈， push(), top(), pop()</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="comment">// size()</span></span><br><span class="line"><span class="comment">// empty()</span></span><br><span class="line"><span class="comment">// push()  栈顶加入一个元素</span></span><br><span class="line"><span class="comment">// top() 范湖栈顶元素</span></span><br><span class="line"><span class="comment">// pop() 弹出栈顶元素</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><p>双端队列，队头队尾都可以插入删除元素，也可以随机访问，加强版vector。</p>
-<p>deque非常厉害，几乎支持其他容器所有的操作，但是速度对应的也比较慢。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;deque&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">size</span>()</span><br><span class="line">empty()</span><br><span class="line"><span class="built_in">clear</span>()   <span class="comment">// 支持清空操作</span></span><br><span class="line">front()  <span class="comment">// 可以访问头部或尾部元素</span></span><br><span class="line">back()</span><br><span class="line"><span class="comment">// 能够从头或者尾部插入或删除元素</span></span><br><span class="line">push_back()</span><br><span class="line">pop_back()</span><br><span class="line">push_front()</span><br><span class="line">pop_front()</span><br><span class="line">[]  <span class="comment">// 支持索引操作</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="set-map-multiset-multimap"><a href="#set-map-multiset-multimap" class="headerlink" title="set, map multiset, multimap"></a>set, map multiset, multimap</h3><p>基于平衡二叉树(红黑树), 动态维护有序序列</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">size</span>();</span><br><span class="line">empty();</span><br><span class="line"><span class="built_in">clear</span>();</span><br><span class="line"><span class="built_in">begin</span>()/<span class="built_in">end</span>();  ++ , --  迭代器支持自增自减 返回前驱后继  时间复杂度也是<span class="built_in">log</span> n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>/ <span class="built_in">multiset</span></span><br><span class="line"><span class="comment">// multiset可以存储多个相同的元素</span></span><br><span class="line">insert(); <span class="comment">// 插入一个元素 log(n)</span></span><br><span class="line"><span class="built_in">find</span>(x); <span class="comment">// 查找一个元素</span></span><br><span class="line">count(x); <span class="comment">// 返回某个数的个数</span></span><br><span class="line">erase(); <span class="comment">// 输入一个数x，则删除所有x O(k + log n) k是元素个数  输入一个迭代器，则删除这个迭代器</span></span><br><span class="line">lower_bound()/ upper_bound();  <span class="comment">// lower_bound(x) 返回大于等于x的最小的数的迭代器  upper_bound(x) 返回大于x的最小的数的迭代器</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>/ <span class="built_in">multimap</span>;  <span class="comment">// 将两个元素做映射， multi_map支持一个key对应多个value</span></span><br><span class="line">insert(); <span class="comment">// 插入的是一个pair</span></span><br><span class="line">erase();  <span class="comment">// 输入的参数是一个pair或者迭代器</span></span><br><span class="line"><span class="built_in">find</span>(); <span class="comment">// </span></span><br><span class="line">[];  <span class="comment">// 支持索引操作 时间复杂度O(log n)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; a;</span><br><span class="line">a[<span class="string">"wdh"</span>] = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; a[<span class="string">"wdh"</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="unordered-set-unordered-map-unordered-multiset-unordered-multimap"><a href="#unordered-set-unordered-map-unordered-multiset-unordered-multimap" class="headerlink" title="unordered_set, unordered_map, unordered_multiset, unordered_multimap"></a>unordered_set, unordered_map, unordered_multiset, unordered_multimap</h3><p>使用哈希表进行存储</p>
-<p>操作和上面的相同，时间复杂度都是O(1)。内部无续，不支持lower_bound, upper_bound。不支迭代器的++ –</p>
-<h3 id="bitset"><a href="#bitset" class="headerlink" title="bitset"></a>bitset</h3><p>压位， 进行位运算，如状压DP的对状态的各种位操作。</p>
-<p>比如如果开大小为1024的bool数组，那么需要使用1KB内存。</p>
-<p>但是如果使用压位，那么只需要使用125B内存。</p>
-<p>要开10000 * 10000的bool数组，那么需要大概100MB内存，但是内存限制是64MB， 这个时候使用压位就可以只用</p>
-<p>12MB内存。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bitset</span>&lt;10000&gt; s;  <span class="comment">// 一万位</span></span><br><span class="line">~ &amp; | ^;  <span class="comment">// 按位逻辑操作</span></span><br><span class="line">&gt;&gt; &lt;&lt; ;  <span class="comment">// 移位操作</span></span><br><span class="line">==, != ;  <span class="comment">// 比较操作</span></span><br><span class="line">[];   <span class="comment">// 取出某一位</span></span><br><span class="line">count();  <span class="comment">// 返回有多少个1</span></span><br><span class="line">any();  <span class="comment">// 判断是否至少有一个1</span></span><br><span class="line">none();  <span class="comment">// 判断是否全为零</span></span><br><span class="line"><span class="built_in">set</span>();  <span class="comment">// 把所有位置为1</span></span><br><span class="line"><span class="built_in">set</span>(k, v); <span class="comment">// 将第k位变成v</span></span><br><span class="line">reset();  <span class="comment">// 将所有位变成零</span></span><br><span class="line">flip(); <span class="comment">// 将所有位取反，等价于~</span></span><br><span class="line">flip(k); <span class="comment">// 将第k位取反</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="algorithm"><a href="#algorithm" class="headerlink" title="algorithm"></a>algorithm</h3><p>实现了一些常用算法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a;</span><br><span class="line">sort(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>());  <span class="comment">// 对a进行快速排序</span></span><br><span class="line">reverse(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>()); <span class="comment">// 翻转一个vector</span></span><br><span class="line">unique(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>()); <span class="comment">// 返回去重之后的尾迭代器(指针), 前闭后开，返回的是去重之后末尾元素的下一个位置</span></span><br><span class="line"><span class="keyword">int</span> m  =unique(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>()) - a.<span class="built_in">begin</span>(); <span class="comment">// 计算去重之后的元素个数m</span></span><br><span class="line">random_shuffle(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>());  <span class="comment">// 随机打乱顺序</span></span><br><span class="line">next_permutation();  <span class="comment">// 将两个迭代器(指针)指定的部分看做一个排列，求出这些元素构成的全排列中，字典序排在写一个的全排列。并直接在序列上更新。若不存在，则返回false，否则返回true。同理有prev_permutation函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出1 - n的 n！中全排列</span></span><br><span class="line"><span class="keyword">int</span> q[<span class="number">3</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++) <span class="built_in">cout</span> &lt;&lt; q[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;<span class="keyword">while</span>(next_permutation(q, q+<span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/23/stl%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -536,7 +512,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -562,7 +538,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-23 15:10:09" itemprop="dateModified" datetime="2020-07-23T15:10:09+08:00">2020-07-23</time>
+                <time title="修改时间：2020-10-13 20:27:35" itemprop="dateModified" datetime="2020-10-13T20:27:35+08:00">2020-10-13</time>
               </span>
 
           
@@ -580,12 +556,14 @@
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, …）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: n = 12<br>输出: 3<br>解释: 12 = 4 + 4 + 4.</p>
 <p>输入: n = 13<br>输出: 2<br>解释: 13 = 4 + 9.</p>
-<h3 id="方法一：暴力"><a href="#方法一：暴力" class="headerlink" title="方法一：暴力"></a>方法一：暴力</h3><p>拿到题目后想都没想Orz，直接dfs暴力搜索，果然T了。。。TAT</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> ans;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> base, <span class="keyword">int</span> count)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (left &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (left == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans = <span class="built_in">min</span>(ans, count);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = base; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">            dfs(left - i * i, i, count + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSquares</span><span class="params">(<span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ans = n;</span><br><span class="line">        dfs(n, <span class="built_in">pow</span>(n, <span class="number">1.0</span> / <span class="number">2.0</span>), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法二：动态规划"><a href="#方法二：动态规划" class="headerlink" title="方法二：动态规划"></a>方法二：动态规划</h3><p>设dp[i]表示和为i的最小平方数的个数，转移方程为：<br>dp[i] = min(dp[i], dp[i - j * j] + 1);</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSquares</span><span class="params">(<span class="keyword">int</span> n)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i] = i;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; i - j * j &gt;= <span class="number">0</span>; j++)</span><br><span class="line">                dp[i] = <span class="built_in">min</span>(dp[i], dp[i - j * j] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/22/leetcode-solution-2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -609,7 +587,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -635,7 +613,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-25 16:32:51" itemprop="dateModified" datetime="2020-07-25T16:32:51+08:00">2020-07-25</time>
+                <time title="修改时间：2020-10-13 20:27:44" itemprop="dateModified" datetime="2020-10-13T20:27:44+08:00">2020-10-13</time>
               </span>
 
           
@@ -653,31 +631,14 @@
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入：[3,4,5,1,2]<br>输出：1</p>
 <p>输入：[2,2,2,0,1]<br>输出：0</p>
-<h3 id="方法一：暴力"><a href="#方法一：暴力" class="headerlink" title="方法一：暴力"></a>方法一：暴力</h3><p>暴力的方法相对很直观，比较容易想到。但这道题没有说明搬运元素的个数，因此需要特判一下是否没有搬运，即比较数组头和数组尾元素大小即可。若nums[0] &lt; nums[n - 1]则说明没有搬运，直接返回第一个元素即可。</p>
-<p>若搬运了元素，进行一次遍历即可，返回满足nums[i] &lt; nums[i - 1]的元素即可。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = numbers.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">min</span>(numbers[<span class="number">0</span>], numbers[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">if</span> (numbers[<span class="number">0</span>] &lt; numbers[n - <span class="number">1</span>])</span><br><span class="line">            <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">            <span class="keyword">if</span> (numbers[i] &lt; numbers[i - <span class="number">1</span>])</span><br><span class="line">                <span class="keyword">return</span> numbers[i];</span><br><span class="line">        <span class="keyword">return</span> numbers[n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>显然时间复杂度为O(n)。</p>
-<h3 id="方法二：二分查找"><a href="#方法二：二分查找" class="headerlink" title="方法二：二分查找"></a>方法二：二分查找</h3><p>暴力的时间复杂度过高，通过二分查找可以将平均时间复杂度降至O(logn)。假定左端元素下标为i，右端元素下标为j，每次二分后得到mid元素可能以下存在三种情况</p>
-<ol>
-<li><p>nums[mid] &lt; nums[j]</p>
-<p>说明被找元素位于i和mid之间，因此将j修改为mid</p>
-</li>
-<li><p>nums[mid] &gt; nums[j]</p>
-<p>说明被找元素位于j和mid之间，因此将i修改为mid + 1</p>
-</li>
-<li><p>nums[mid] == nums[j]</p>
-<p>由于存在重复元素，因此不能轻易修改i、j，由于mid和j处元素相同，因此不论nums[j]是否为最小元素， j左边应该存在一个“替代品”。。。因此将j–即可。</p>
-</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; numbers)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = numbers.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">min</span>(numbers[<span class="number">0</span>], numbers[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">if</span> (numbers[<span class="number">0</span>] &lt; numbers[n - <span class="number">1</span>])</span><br><span class="line">            <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = i + (j - i) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (numbers[mid] &lt; numbers[j])</span><br><span class="line">                j = mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (numbers[mid] &gt; numbers[j])</span><br><span class="line">                i = mid + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> numbers[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>平均时间复杂度为O(logn)。</p>
-<hr>
-<p>这似乎是我开始写的第一篇blog，希望我以后能够将写博客的习惯坚持下去吧，最近发现自己实在是太菜了Orz，无论是科研还是代码能力都菜得抠脚Orz。。。TAT</p>
-<p>为此我也希望自己开始改变吧，以后无论是刷leetcode，还是读论文等等，与技术相关的东西我渐渐都会放在这里，希望自己在这两年卷的飞起的环境里还能找到一个还算行的工作吧。。。Orz</p>
-<p>这里可能也会放一些吐槽吧。。。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/22/leetcode-solution-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -701,7 +662,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Xinrui Tang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -722,6 +683,13 @@
 
               <time title="创建时间：2020-07-19 23:31:33" itemprop="dateCreated datePublished" datetime="2020-07-19T23:31:33+08:00">2020-07-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-13 20:28:08" itemprop="dateModified" datetime="2020-10-13T20:28:08+08:00">2020-10-13</time>
+              </span>
 
           
 
@@ -735,19 +703,15 @@
 
       
           <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/19/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -813,7 +777,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
