@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="stringSTL提供string类型用以替代C语言自带的char型数组。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象_STL进阶">
+<meta property="og:url" content="http://believebest35.github.io/2020/10/14/OOP-THU-8/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="stringSTL提供string类型用以替代C语言自带的char型数组。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-14T02:52:25.000Z">
+<meta property="article:modified_time" content="2020-10-14T14:06:43.358Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/10/14/OOP-THU-8/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>面向对象_STL进阶 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#string"><span class="nav-number">1.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iostream-输入输出流"><span class="nav-number">2.</span> <span class="nav-text">iostream 输入输出流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cout"><span class="nav-number">2.1.</span> <span class="nav-text">cout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件输入输出流"><span class="nav-number">2.2.</span> <span class="nav-text">文件输入输出流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串输入输出流"><span class="nav-number">2.3.</span> <span class="nav-text">字符串输入输出流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sort"><span class="nav-number">3.</span> <span class="nav-text">sort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#智能指针与引用计数"><span class="nav-number">4.</span> <span class="nav-text">智能指针与引用计数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda表达式"><span class="nav-number">5.</span> <span class="nav-text">lambda表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则表达式"><span class="nav-number">6.</span> <span class="nav-text">正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式库regex"><span class="nav-number">6.1.</span> <span class="nav-text">正则表达式库regex</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/14/OOP-THU-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象_STL进阶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-14 10:52:25 / 修改时间：22:06:43" itemprop="dateCreated datePublished" datetime="2020-10-14T10:52:25+08:00">2020-10-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="string"><a href="#string" class="headerlink" title="string"></a>string</h1><p>STL提供string类型用以替代C语言自带的char型数组。</p>
+<a id="more"></a>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> first_name = <span class="string">"xinrui"</span>, last_name = <span class="string">"tang"</span>;</span><br><span class="line"><span class="built_in">string</span> full_name = first_name + <span class="string">" "</span> + last_name; <span class="comment">// string拼接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s0</span><span class="params">(<span class="string">"Hello World!"</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">()</span></span>; <span class="comment">// 空串</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转换为C风格字符串</span></span><br><span class="line">s0.c_str(); <span class="comment">// 返回的是字符串常量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s;</span><br><span class="line"><span class="comment">// 与vector类似</span></span><br><span class="line">s[i]; <span class="comment">// 下标访问</span></span><br><span class="line"><span class="keyword">int</span> len = s.<span class="built_in">size</span>();</span><br><span class="line"><span class="keyword">int</span> len = s.length(); <span class="comment">// 求长度，vector没有</span></span><br><span class="line">s.<span class="built_in">clear</span>(); <span class="comment">// 清空</span></span><br><span class="line"><span class="keyword">bool</span> is_empty = s.empty(); <span class="comment">// 查询是否为空</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> ch : s)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ... 迭代，同vector</span></span><br><span class="line">&#125;</span><br><span class="line">s.push_back(<span class="string">'a'</span>); <span class="comment">// 尾部加字符</span></span><br><span class="line">s.append(<span class="string">"aa"</span>); <span class="comment">// 尾部加字符串</span></span><br><span class="line"></span><br><span class="line">s += <span class="string">'a'</span>;</span><br><span class="line">s += <span class="string">"aa"</span>; <span class="comment">// += 运算符进行拼接</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; s; <span class="comment">// 遇到空格停止读入</span></span><br><span class="line">getline(<span class="built_in">cin</span>, s); <span class="comment">// 读一行</span></span><br><span class="line">getline(<span class="built_in">cin</span>, s, <span class="string">'#'</span>); <span class="comment">// 读到遇见指定分隔符</span></span><br><span class="line"></span><br><span class="line">s0 &lt; s1; <span class="comment">// 比较字典序</span></span><br><span class="line"></span><br><span class="line">s = to_string(<span class="number">123</span>); <span class="comment">// 整型数转string</span></span><br><span class="line">s = to_string(<span class="number">3.14</span>); <span class="comment">// 浮点数转string</span></span><br><span class="line">s = to_string(<span class="number">3.1415926</span>); <span class="comment">// 3.141593 损失精度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = stoi(<span class="string">"123"</span>); <span class="comment">// string转int</span></span><br><span class="line"><span class="keyword">double</span> b = stod(<span class="string">"3.14"</span>); <span class="comment">// string转double</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="iostream-输入输出流"><a href="#iostream-输入输出流" class="headerlink" title="iostream 输入输出流"></a>iostream 输入输出流</h1><p>ostream输出流，重载了所有基础类型的”&lt;&lt;”运算，将printf相对混乱的输入格式统一做了简化，”&lt;&lt;”运算左结合。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">my_ostream</span> // 定义自己的输出流</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    my_ostream&amp; <span class="keyword">operator</span>&lt;&lt; (<span class="keyword">char</span> c)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>, c);</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    my_ostream&amp; <span class="keyword">operator</span>&lt;&lt; (<span class="keyword">const</span> <span class="keyword">char</span> *str)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s"</span>, str);</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    my_ostream my_cout;</span><br><span class="line">    my_cout &lt;&lt; <span class="string">'a'</span> &lt;&lt; <span class="string">"aaa"</span>; <span class="comment">// 运算为左结合</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>格式化输出，借助流操纵算子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; <span class="number">2018.0</span> &lt;&lt; <span class="string">" "</span> &lt;&lt; <span class="number">0.0001</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="comment">//浮点数，小数有效6位 -&gt; 2018.000000 0.000100</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; scientific &lt;&lt; <span class="number">2018.0</span> &lt;&lt; <span class="string">" "</span> &lt;&lt; <span class="number">0.0001</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="comment">//科学计数法 -&gt; 2.018000e+03 1.000000e-04</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; defaultfloat;</span><br><span class="line">		<span class="comment">//还原默认输出格式</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; <span class="number">3.1415926</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="comment">//输出精度设置为2，包括整数+小数 -&gt; 3.1</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; oct &lt;&lt; <span class="number">12</span> &lt;&lt; <span class="string">" "</span> &lt;&lt; hex &lt;&lt; <span class="number">12</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">		<span class="comment">//八进制输出 -&gt; 14  十六进制输出 -&gt; c</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; dec;	</span><br><span class="line">		<span class="comment">//还原十进制</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; setw(<span class="number">3</span>) &lt;&lt; setfill(<span class="string">'*'</span>) &lt;&lt; <span class="number">5</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//设置对齐长度为3，对齐字符为* -&gt; **5</span></span><br></pre></td></tr></table></figure>
+
+<p>endl基本等于输出’\n’后再刷新缓冲区，是一个函数，同时也是流操纵算子。</p>
+<h2 id="cout"><a href="#cout" class="headerlink" title="cout"></a>cout</h2><p>无法复制，是一个全局对象。</p>
+<p>注意重载流运算符的方式:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(<span class="keyword">const</span> <span class="keyword">char</span> &amp;c)</span><br><span class="line"><span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; os, MyClass obj)</span><br></pre></td></tr></table></figure>
+
+<p>重载 ‘&lt;&lt;’ 返回引用以防进行复制。</p>
+<p>观察ostream的拷贝构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ostream (<span class="keyword">const</span> ostream&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">ostream (ostream&amp;&amp; x);</span><br></pre></td></tr></table></figure>
+
+<p> 拷贝构造函数被删除，只允许移动，防止复制。</p>
+<h2 id="文件输入输出流"><a href="#文件输入输出流" class="headerlink" title="文件输入输出流"></a>文件输入输出流</h2><p>以ifstream为例，是istream子类。</p>
+<p>打开文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ifstream <span class="title">ifs</span><span class="params">(<span class="string">"input.txt"</span>)</span></span>;</span><br><span class="line"><span class="function">ifstream <span class="title">ifs</span><span class="params">(<span class="string">"binary.bin"</span>, ifstream::binary)</span></span>;<span class="comment">//以二进制形式打开文件</span></span><br><span class="line">ifstream ifs;</span><br><span class="line">ifs.<span class="built_in">open</span>(<span class="string">"file_path"</span>)</span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">ifs.<span class="built_in">close</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串输入输出流"><a href="#字符串输入输出流" class="headerlink" title="字符串输入输出流"></a>字符串输入输出流</h2><p>stringstream对象内部维护了一个buffer，使用流输出函数可以将数据写入buffer，使用流输入函数可以从buffer中读出数据。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stringstream</span> ss; <span class="comment">//空字符串流</span></span><br><span class="line"><span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(str)</span></span>; <span class="comment">//以字符串初始化流</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">stringstream</span> ss;</span><br><span class="line">ss &lt;&lt; <span class="string">"10"</span>;</span><br><span class="line">ss &lt;&lt; <span class="string">"0 200"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line">ss &gt;&gt; a &gt;&gt; b;	<span class="comment">//a=100 b=200</span></span><br><span class="line"></span><br><span class="line">ss.str(); <span class="comment">//返回一个string对象,内容为stringstream的buffer</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意buffer内容并不是未读取的内容</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stringstream</span> ss;</span><br><span class="line">ss &lt;&lt; <span class="string">"100 200"</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ss.str() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//"100 200"</span></span><br><span class="line"><span class="keyword">int</span> a;</span><br><span class="line">ss &gt;&gt; a; <span class="comment">// a = 100</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ss.str() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//"100 200"</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::sort(); <span class="comment">// STL提供的排序算法，默认从小到大排序，时间复杂度O(nlogn)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原型</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Iterator</span>&gt; </span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">sort</span>(<span class="title">Iterator</span> <span class="title">first</span>, <span class="title">Iterator</span> <span class="title">last</span>);</span></span><br></pre></td></tr></table></figure>
+
+<p>若想从大到小排序，则</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sort还重载了另一套参数</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">Iterator</span>, <span class="title">class</span> <span class="title">Compare</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> <span class="title">sort</span>(<span class="title">Iterator</span> <span class="title">first</span>, <span class="title">Iterator</span> <span class="title">last</span>, <span class="title">Compare</span> <span class="title">comp</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于整型</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt; b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sort(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), cmp); <span class="comment">// 从大到小排序</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// STL提供了预定义的排序函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从小到大</span></span><br><span class="line">sort(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), less&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line"><span class="comment">// 从大到小</span></span><br><span class="line">sort(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>(), greater&lt;<span class="keyword">int</span>&gt;());</span><br></pre></td></tr></table></figure>
+
+<p>对于自定义的类型，使用sort排序需要自己定义比较规则，可以重载 ‘&lt;’ , ‘&gt;’ 运算符或者定义cmp比较函数。</p>
+<h1 id="智能指针与引用计数"><a href="#智能指针与引用计数" class="headerlink" title="智能指针与引用计数"></a>智能指针与引用计数</h1><ul>
+<li>shared_ptr</li>
+</ul>
+<p>来自memory头文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1</span>))</span></span>;</span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2;	<span class="comment">//空指针</span></span><br></pre></td></tr></table></figure>
+
+<p>通过引用计数知道何时销毁资源</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">4</span>))</span></span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p1.use_count() &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = p1;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; p1.use_count() &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; p2.use_count() &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">&#125;	<span class="comment">//p2出作用域</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; p1.use_count() &lt;&lt; <span class="string">' '</span>;</span><br><span class="line"><span class="comment">// 输出 1 2 2 1</span></span><br></pre></td></tr></table></figure>
+
+<p>其他用法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p.<span class="built_in">get</span>()	<span class="comment">//获取裸指针</span></span><br><span class="line">p.reset()	<span class="comment">//清除指针并减少引用计数</span></span><br><span class="line">static_pointer_cast&lt;<span class="keyword">int</span>&gt;(p)</span><br><span class="line">dynamic_pointer_cast&lt;Base&gt;(p)</span><br></pre></td></tr></table></figure>
+
+<p>注意不能使用同一裸指针同时初始化多个智能指针</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = <span class="keyword">new</span> <span class="keyword">int</span>(); </span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(p)</span></span>; </span><br><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p2</span><span class="params">(p)</span></span>; <span class="comment">// wrong !!</span></span><br></pre></td></tr></table></figure>
+
+<p>关于智能指针的详细介绍需要另外查资料。</p>
+<ul>
+<li>weak_ptr</li>
+</ul>
+<p>指向对象但不计数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">sp</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">3</span>))</span></span>;</span><br><span class="line">weak_ptr&lt;<span class="keyword">int</span>&gt; wp1 = sp;</span><br><span class="line"></span><br><span class="line">wp.use_count()	<span class="comment">//获取引用计数</span></span><br><span class="line">wp.reset()			<span class="comment">//清除指针</span></span><br><span class="line">wp.expired()		<span class="comment">//检查对象是否无效</span></span><br><span class="line">sp = wp.lock()	<span class="comment">//从弱引用获得一个智能指针</span></span><br></pre></td></tr></table></figure>
+
+<p>栗子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::weak_ptr&lt;<span class="keyword">int</span>&gt; wp;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> sp1 = <span class="built_in">std</span>::make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">20</span>);</span><br><span class="line">    wp = sp1;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; wp.use_count() &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//1</span></span><br><span class="line">    <span class="keyword">auto</span> sp2 = wp.lock();	<span class="comment">//从弱引用中获得一个shared_ptr</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; wp.use_count() &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//2</span></span><br><span class="line">    sp1.reset();							<span class="comment">//sp1释放指针</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; wp.use_count() &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//1</span></span><br><span class="line">&#125;	<span class="comment">//sp2销毁</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; wp.use_count() &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; wp.expired() &lt;&lt; <span class="built_in">endl</span>;	  <span class="comment">//检查弱引用是否失效：True</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>unique_ptr</li>
+</ul>
+<p>shared_ptr涉及到共享计数，性能相对较差，使用unique_ptr可以保证每个对象只被唯一的一个指针所引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> up1 = <span class="built_in">std</span>::make_unique&lt;<span class="keyword">int</span>&gt;(<span class="number">20</span>);</span><br><span class="line"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; up2 = up1;  <span class="comment">//错误，不能复制unique指针</span></span><br><span class="line"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; up2 = <span class="built_in">std</span>::<span class="built_in">move</span>(up1); <span class="comment">//可以移动unique指针</span></span><br><span class="line"><span class="keyword">int</span> *p = up2.<span class="built_in">release</span>(); <span class="comment">//放弃指针控制权，返回裸指针</span></span><br><span class="line"><span class="keyword">delete</span> p;</span><br></pre></td></tr></table></figure>
+
+<h1 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h1><p>C++11引入lambda表达式以创建匿名函数。</p>
+<p>语法定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[捕获参数] (函数参数列表) <span class="keyword">mutable</span> 或 exception 声明 -&gt; 返回值类型 &#123;函数体&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个栗子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> func = [a] (<span class="keyword">int</span> x) -&gt; <span class="keyword">int</span> &#123;<span class="keyword">return</span> a + x&#125;; <span class="comment">// -&gt; int 显式指定了返回类型，当返回void或者编译器可以自动推断时，可以省略</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; func(<span class="number">3</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 按值捕获输出4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func_2 = [&amp;a] (<span class="keyword">int</span> x) &#123;<span class="keyword">return</span> a + x&#125;;</span><br><span class="line">a = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; func_2(<span class="number">3</span>) &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 按引用捕获输出5</span></span><br></pre></td></tr></table></figure>
+
+<p>[捕获参数] 标志lambda表达式的开始，不捕获时为空。可以按照值捕获也可以按引用捕获。一些例子：</p>
+<ul>
+<li><p>[] 不捕获变量</p>
+</li>
+<li><p>[a, &amp;b]  按值捕获a，引用捕获b</p>
+</li>
+<li><p>[this] 按值捕获this指针</p>
+</li>
+<li><p>[=] 按值捕获所有外部变量</p>
+</li>
+<li><p>[&amp;] 按引用捕获所有外部变量</p>
+</li>
+<li><p>[=, &amp;a] 按引用捕获a，其余变量按值捕获</p>
+</li>
+<li><p>[&amp;, =a] 按值捕获a，其余变量按引用捕获</p>
+</li>
+</ul>
+<p>mutable 或 exception 声明可以省略。按值传递函数对象参数时，加上 mutable 修饰符后，可以修改传递进来的拷贝（注意是能修改拷贝，而不是值本身），exception 声明用于指定函数抛出的异常，如抛出整数类型的异常，可以使用 throw(int)。</p>
+<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><p>正则表达式是文本搜索时进行匹配的一种规则。</p>
+<ul>
+<li>单独字符，匹配字符本身。</li>
+<li>转义字符，例如 ‘\n’ 匹配换行符， ‘\t’ 匹配制表符。</li>
+<li>特殊字符，’^’ 匹配开头，’$’匹配结尾， ‘^hello$’就可匹配只含有hello的内容</li>
+<li>[abc] 匹配其中的任意单个字符</li>
+<li>[a-z] 匹配所有小写字母</li>
+<li>[0-9] 匹配所有单个数字</li>
+<li>[]中的内容加 ‘^’ 可以取反，即表示不匹配。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[^abc] 表示不匹配a，b，c</span><br><span class="line">[^a-z] 表示不匹配小写字母</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>[]]可以连用，例如</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[a-z][0-9]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>特殊字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#39;.&#39; 可以匹配除换行符以外的任意字符</span><br><span class="line">\d 等价于 [0-9]</span><br><span class="line">\D 等价于 [^0-9]</span><br><span class="line">\s 匹配所有空白字符</span><br><span class="line">\S 匹配所有非空白字符</span><br><span class="line">\w 匹配字母数字和下划线</span><br><span class="line">\W 匹配非字母数字和下划线</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>x{n,m}代表前面内容出现次数重复n~m次</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a&#123;4&#125; 匹配aaaa</span><br><span class="line">a&#123;2,4&#125; 匹配aa或aaa或aaaa</span><br><span class="line">a&#123;2,&#125; 匹配长度大于等于2的</span><br><span class="line">[a-z]&#123;5,12&#125; 代表为长度为5~12的英文字母组合</span><br><span class="line">.&#123;5&#125; 所有长度为5的字符</span><br><span class="line">? 等价&#123;0,1&#125;</span><br><span class="line">+ 等价&#123;1,&#125;</span><br><span class="line">* 等价&#123;0,&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或连接符</li>
+</ul>
+<p>匹配模式可以使用 ‘|’ 进行连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(Chapter|Section) [1-9][0-9]? 可以匹配Chapter 1、Section 10等</span><br><span class="line">0\d&#123;2&#125;-\d&#123;8&#125;|0\d&#123;3&#125;-\d&#123;7&#125; 可以匹配010-12345678、0376-2233445</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 ()改变优先级</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m|food 可以匹配m 或者 food</span><br><span class="line">(m|f)ood 可以匹配mood 或者 food</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以()标识的部分被称作分组</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 正则表达式匹配后，每个分组的内容将被捕获</span><br><span class="line">* 用于提取关键信息，例如version(\d+)即可捕获版本号</span><br><span class="line">* 分组会按顺序标号</span><br><span class="line">* 0号永远是匹配的字符串本身</span><br><span class="line">* (a)(pple) 0号为apple 1号为a 2号为pple</span><br><span class="line">使用(?:pattern)可以不捕获该分组</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>预查 后向引用 贪婪与懒惰</li>
+</ul>
+<p>to do</p>
+<ul>
+<li>原生字符串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">正则表达式中往往会有很多\，字符串表示时应写成\\</span><br><span class="line">原生字符串可以取消转义，保留字面值</span><br><span class="line">语法：R&quot;(str)&quot; 表示str的字面值</span><br><span class="line"></span><br><span class="line">&quot;\\d+&quot; &#x3D; R&quot;(\d+)&quot; &#x3D; \d+</span><br></pre></td></tr></table></figure>
+
+<h2 id="正则表达式库regex"><a href="#正则表达式库regex" class="headerlink" title="正则表达式库regex"></a>正则表达式库regex</h2><p>正则表达式匹配的三种模式</p>
+<ul>
+<li>匹配</li>
+</ul>
+<p>询问字符串是否能匹配正则表达式，并捕获相应分组</p>
+<p>regex_match</p>
+<ul>
+<li>替换</li>
+</ul>
+<p>替换字符串中匹配的子串，并替换成相应内容</p>
+<p>regex_replace</p>
+<ul>
+<li>搜索</li>
+</ul>
+<p>搜索字符串中匹配的子串，并捕获相应分组</p>
+<p>regex_search</p>
+<p>栗子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"subject"</span>)</span></span>;</span><br><span class="line"><span class="function">regex <span class="title">e</span><span class="params">(<span class="string">R"(sub)(.*)"</span>)</span></span>;</span><br><span class="line">smatch sm;</span><br><span class="line">regex_match(s,sm,e);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; sm.<span class="built_in">size</span>() &lt;&lt; <span class="string">" matches\n"</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"the matches were: "</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> i=<span class="number">0</span>; i&lt;sm.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"["</span> &lt;&lt; sm[i] &lt;&lt; <span class="string">"] "</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：<br>3 matches<br>the matches were: [subject] [sub] [ject]</p>
+<p>关于regex库更详细的用法需要参考专业资料。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/13/OOP-THU-7/" rel="prev" title="面向对象_模版和STL初步">
+      <i class="fa fa-chevron-left"></i> 面向对象_模版和STL初步
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
