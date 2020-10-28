@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="StringString是一种引用类型，也是十分重要的类，由于String经常使用，因此Java允许以字面量的形式来表示String。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java核心类">
+<meta property="og:url" content="http://believebest35.github.io/2020/10/28/Java-3/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="StringString是一种引用类型，也是十分重要的类，由于String经常使用，因此Java允许以字面量的形式来表示String。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-28T02:21:42.000Z">
+<meta property="article:modified_time" content="2020-10-28T09:06:39.116Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/10/28/Java-3/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java核心类 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串比较"><span class="nav-number">1.1.</span> <span class="nav-text">字符串比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常用的方法"><span class="nav-number">1.2.</span> <span class="nav-text">一些常用的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符编码"><span class="nav-number">1.3.</span> <span class="nav-text">字符编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StringBuilder"><span class="nav-number">2.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StringJoiner"><span class="nav-number">3.</span> <span class="nav-text">StringJoiner</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#包装类型"><span class="nav-number">4.</span> <span class="nav-text">包装类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaBean"><span class="nav-number">5.</span> <span class="nav-text">JavaBean</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#了解"><span class="nav-number">6.</span> <span class="nav-text">了解</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/10/28/Java-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java核心类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-28 10:21:42 / 修改时间：17:06:39" itemprop="dateCreated datePublished" datetime="2020-10-28T10:21:42+08:00">2020-10-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><p><code>String</code>是一种引用类型，也是十分重要的类，由于String经常使用，因此Java允许以字面量的形式来表示<code>String</code>。</p>
+<a id="more"></a>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"Hello!"</span>;</span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">'H'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'!'</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Java内部将<code>String</code>表示为一个<code>char</code>型数组。</p>
+<h2 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h2><p><code>String</code>为引用类型，关于字符串内容的比较需要使用<code>equals()</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">"hello"</span>;</span><br><span class="line">        String s2 = <span class="string">"HELLO"</span>.toLowerCase();</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1.equals(s2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个输出false（实际在比较所引用内容的地址），第二个输出true（比较引用对象实际的内容）。</p>
+<h2 id="一些常用的方法"><a href="#一些常用的方法" class="headerlink" title="一些常用的方法"></a>一些常用的方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否包含子串:</span></span><br><span class="line"><span class="string">"Hello"</span>.contains(<span class="string">"ll"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="string">"Hello"</span>.indexOf(<span class="string">"l"</span>); <span class="comment">// 2</span></span><br><span class="line"><span class="string">"Hello"</span>.lastIndexOf(<span class="string">"l"</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="string">"Hello"</span>.startsWith(<span class="string">"He"</span>); <span class="comment">// true</span></span><br><span class="line"><span class="string">"Hello"</span>.endsWith(<span class="string">"lo"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 字串</span></span><br><span class="line"><span class="string">"Hello"</span>.substring(<span class="number">2</span>); <span class="comment">// "llo"</span></span><br><span class="line"><span class="string">"Hello"</span>.substring(<span class="number">2</span>, <span class="number">4</span>); <span class="comment">// "ll"  第二个参数指的是结束字符（不包含）的索引，需要与C++中string的substr()相区分</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 去空格</span></span><br><span class="line"><span class="string">"  \tHello\r\n "</span>.trim(); <span class="comment">// "Hello"  移除字符串首尾空白字符。空白字符包括空格，\t，\r，\n</span></span><br><span class="line"><span class="string">"\u3000Hello\u3000"</span>.strip(); <span class="comment">// "Hello"  strip()方法也可以移除字符串首尾空白字符，但类似中文的空格字符\u3000也会被移除</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 判空 是否有空白字符</span></span><br><span class="line"><span class="string">""</span>.isEmpty(); <span class="comment">// true，因为字符串长度为0</span></span><br><span class="line"><span class="string">"  "</span>.isEmpty(); <span class="comment">// false，因为字符串长度不为0</span></span><br><span class="line"><span class="string">"  \n"</span>.isBlank(); <span class="comment">// true，因为只包含空白字符</span></span><br><span class="line"><span class="string">" Hello "</span>.isBlank(); <span class="comment">// false，因为包含非空白字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串替换</span></span><br><span class="line">String s = <span class="string">"hello"</span>;</span><br><span class="line">s.replace(<span class="string">'l'</span>, <span class="string">'w'</span>); <span class="comment">// "hewwo"，所有字符'l'被替换为'w'</span></span><br><span class="line">s.replace(<span class="string">"ll"</span>, <span class="string">"~~"</span>); <span class="comment">// "he~~o"，所有子串"ll"被替换为"~~"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式替换</span></span><br><span class="line">String s = <span class="string">"A,,B;C ,D"</span>;</span><br><span class="line">s.replaceAll(<span class="string">"[\\,\\;\\s]+"</span>, <span class="string">","</span>); <span class="comment">// "A,B,C,D"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 分割字符串</span></span><br><span class="line">String s = <span class="string">"A,B,C,D"</span>;</span><br><span class="line">String[] ss = s.split(<span class="string">"\\,"</span>); <span class="comment">// &#123;"A", "B", "C", "D"&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 拼接字符串 静态方法</span></span><br><span class="line">String[] arr = &#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>&#125;;</span><br><span class="line">String s = String.join(<span class="string">"***"</span>, arr); <span class="comment">// "A***B***C"</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>格式化字符串</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s = <span class="string">"Hi %s, your score is %d!"</span>;</span><br><span class="line">        System.out.println(s.formatted(<span class="string">"Alice"</span>, <span class="number">80</span>));</span><br><span class="line">        System.out.println(String.format(<span class="string">"Hi %s, your score is %.2f!"</span>, <span class="string">"Bob"</span>, <span class="number">59.5</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hi Alice, your score is 80!</span></span><br><span class="line"><span class="comment">// Hi Bob, your score is 59.50!</span></span><br></pre></td></tr></table></figure>
+
+<p>常用的占位符有：</p>
+<ul>
+<li><code>%s</code>：显示字符串；</li>
+<li><code>%d</code>：显示整数；</li>
+<li><code>%x</code>：显示十六进制整数；</li>
+<li><code>%f</code>：显示浮点数。</li>
+</ul>
+<p><strong>类型转换</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String.valueOf(<span class="number">123</span>); <span class="comment">// "123"</span></span><br><span class="line">String.valueOf(<span class="number">45.67</span>); <span class="comment">// "45.67"</span></span><br><span class="line">String.valueOf(<span class="keyword">true</span>); <span class="comment">// "true"</span></span><br><span class="line">String.valueOf(<span class="keyword">new</span> Object()); <span class="comment">// 类似java.lang.Object@636be97c</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串转换为int类型</span></span><br><span class="line"><span class="keyword">int</span> n1 = Integer.parseInt(<span class="string">"123"</span>); <span class="comment">// 123</span></span><br><span class="line"><span class="keyword">int</span> n2 = Integer.parseInt(<span class="string">"ff"</span>, <span class="number">16</span>); <span class="comment">// 按十六进制转换，255</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 字符串转换为boolean类型</span></span><br><span class="line"><span class="keyword">boolean</span> b1 = Boolean.parseBoolean(<span class="string">"true"</span>); <span class="comment">// true</span></span><br><span class="line"><span class="keyword">boolean</span> b2 = Boolean.parseBoolean(<span class="string">"FALSE"</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// String和char[]</span></span><br><span class="line"><span class="keyword">char</span>[] cs = <span class="string">"Hello"</span>.toCharArray(); <span class="comment">// String -&gt; char[]</span></span><br><span class="line">String s = <span class="keyword">new</span> String(cs); <span class="comment">// char[] -&gt; String</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1260469698963456" target="_blank" rel="noopener">link</a></p>
+<h1 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h1><p>Java可以使用<code>+</code>直接拼接字符串。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    s = s + <span class="string">","</span> + i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但上述过程使用<code>+</code>的效率过低。</p>
+<p>为了能高效拼接字符串，Java标准库提供了<code>StringBuilder</code>，它是一个可变对象，可以预分配缓冲区，这样，往<code>StringBuilder</code>中新增字符时，不会创建新的临时对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="number">1024</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    sb.append(<span class="string">','</span>);</span><br><span class="line">    sb.append(i);</span><br><span class="line">&#125;</span><br><span class="line">String s = sb.toString();</span><br></pre></td></tr></table></figure>
+
+<h1 id="StringJoiner"><a href="#StringJoiner" class="headerlink" title="StringJoiner"></a>StringJoiner</h1><p>用分隔符拼接数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.StringJoiner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String[] names = &#123;<span class="string">"Bob"</span>, <span class="string">"Alice"</span>, <span class="string">"Grace"</span>&#125;;</span><br><span class="line">        <span class="keyword">var</span> sj = <span class="keyword">new</span> StringJoiner(<span class="string">", "</span>);</span><br><span class="line">        <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">            sj.add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(sj.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Bob, Alice, Grace</span></span><br></pre></td></tr></table></figure>
+
+<p>还可以指定开头和结尾</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.StringJoiner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        String[] names = &#123;<span class="string">"Bob"</span>, <span class="string">"Alice"</span>, <span class="string">"Grace"</span>&#125;;</span><br><span class="line">        <span class="keyword">var</span> sj = <span class="keyword">new</span> StringJoiner(<span class="string">", "</span>, <span class="string">"Hello "</span>, <span class="string">"!"</span>); <span class="comment">// 以 , 作为分隔符， Hello 作为开头， ! 作为结尾</span></span><br><span class="line">        <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">            sj.add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(sj.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Hello Bob, Alice, Grace!</span></span><br></pre></td></tr></table></figure>
+
+<p><code>String.join()</code> 静态方法，不需要指定开头和结尾。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] names &#x3D; &#123;&quot;Bob&quot;, &quot;Alice&quot;, &quot;Grace&quot;&#125;;</span><br><span class="line">var s &#x3D; String.join(&quot;, &quot;, names);</span><br></pre></td></tr></table></figure>
+
+<h1 id="包装类型"><a href="#包装类型" class="headerlink" title="包装类型"></a>包装类型</h1><p>可以把Java的基本类型包装为引用类型，Java核心库为每种基本类型都提供了对应的包装类型：</p>
+<table>
+<thead>
+<tr>
+<th align="left">基本类型</th>
+<th align="left">对应的引用类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">boolean</td>
+<td align="left">java.lang.Boolean</td>
+</tr>
+<tr>
+<td align="left">byte</td>
+<td align="left">java.lang.Byte</td>
+</tr>
+<tr>
+<td align="left">short</td>
+<td align="left">java.lang.Short</td>
+</tr>
+<tr>
+<td align="left">int</td>
+<td align="left">java.lang.Integer</td>
+</tr>
+<tr>
+<td align="left">long</td>
+<td align="left">java.lang.Long</td>
+</tr>
+<tr>
+<td align="left">float</td>
+<td align="left">java.lang.Float</td>
+</tr>
+<tr>
+<td align="left">double</td>
+<td align="left">java.lang.Double</td>
+</tr>
+<tr>
+<td align="left">char</td>
+<td align="left">java.lang.Character</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过静态方法valueOf(int)创建Integer实例:</span></span><br><span class="line">Integer n1 = Integer.valueOf(i);</span><br><span class="line"><span class="comment">// 通过静态方法valueOf(String)创建Integer实例:</span></span><br><span class="line">Integer n2 = Integer.valueOf(<span class="string">"100"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// int 和 Integer 互转</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">100</span>;</span><br><span class="line">Integer n = Integer.valueOf(i);</span><br><span class="line"><span class="keyword">int</span> x = n.intValue();</span><br></pre></td></tr></table></figure>
+
+<p>Java可进行自动装/拆箱。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java编译器自动在int和Integer之间转型：</span></span><br><span class="line">Integer n = <span class="number">100</span>; <span class="comment">// 编译器自动使用Integer.valueOf(int)</span></span><br><span class="line"><span class="keyword">int</span> x = n; <span class="comment">// 编译器自动使用Integer.intValue()</span></span><br></pre></td></tr></table></figure>
+
+<p>所有的包装类型都是不变类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Integer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于包装类型的比较，需要使用<code>equals()</code>。</p>
+<h1 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h1><p>若一个<code>class</code>的定义都符合这样的规范：</p>
+<ul>
+<li>若干<code>private</code>实例字段；</li>
+<li>通过<code>public</code>方法来读写实例字段。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.name; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123; <span class="keyword">this</span>.name = name; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.age; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123; <span class="keyword">this</span>.age = age; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>读写方法符合以下这种命名规范：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读方法:</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Type <span class="title">getXyz</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 写方法:</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setXyz</span><span class="params">(Type value)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>那么这种<code>class</code>被称为<code>JavaBean</code>。</p>
+<p><code>boolean</code>字段比较特殊，它的读方法一般命名为<code>isXyz()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读方法:</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isChild</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">// 写方法:</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setChild</span><span class="params">(<span class="keyword">boolean</span> value)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>通常把一组对应的读方法（<code>getter</code>）和写方法（<code>setter</code>）称为属性（<code>property</code>）。例如，<code>name</code>属性：</p>
+<ul>
+<li>对应的读方法是<code>String getName()</code></li>
+<li>对应的写方法是<code>setName(String)</code></li>
+</ul>
+<p>只有<code>getter</code>的属性称为只读属性（read-only），例如，定义一个age只读属性：</p>
+<ul>
+<li>对应的读方法是<code>int getAge()</code></li>
+<li>无对应的写方法<code>setAge(int)</code></li>
+</ul>
+<p>类似的，只有<code>setter</code>的属性称为只写属性（write-only）。</p>
+<p>很明显，只读属性很常见，只写属性不常见。</p>
+<p>属性只需要定义<code>getter</code>和<code>setter</code>方法，不一定需要对应的字段。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.name; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123; <span class="keyword">this</span>.name = name; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">this</span>.age; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123; <span class="keyword">this</span>.age = age; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isChild</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age &lt;= <span class="number">6</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h1><p><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1260473188087424" target="_blank" rel="noopener">枚举类</a>、<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1331429187256353" target="_blank" rel="noopener">记录类</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/26/Java-2/" rel="prev" title="Java面向对象">
+      <i class="fa fa-chevron-left"></i> Java面向对象
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
