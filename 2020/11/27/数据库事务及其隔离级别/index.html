@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="数据库事务百度了一下，这篇博客写得很好，廖雪峰网站的关于数据库事务的讲解个人认为讲的不好。 数据库事务(transaction)是访问并可能操作各种数据项的一个数据库操作序列，这些操作要么全部执行,要么全部不执行，是一个不可分割的工作单位。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库事务及其隔离级别">
+<meta property="og:url" content="http://believebest35.github.io/2020/11/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%85%B6%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="数据库事务百度了一下，这篇博客写得很好，廖雪峰网站的关于数据库事务的讲解个人认为讲的不好。 数据库事务(transaction)是访问并可能操作各种数据项的一个数据库操作序列，这些操作要么全部执行,要么全部不执行，是一个不可分割的工作单位。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-27T08:31:38.000Z">
+<meta property="article:modified_time" content="2020-11-27T09:43:27.928Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/11/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%85%B6%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库事务及其隔离级别 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库事务"><span class="nav-number">1.</span> <span class="nav-text">数据库事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库的四大特性（ACID）"><span class="nav-number">2.</span> <span class="nav-text">数据库的四大特性（ACID）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库事务的隔离级别"><span class="nav-number">3.</span> <span class="nav-text">数据库事务的隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读未提交-Read-Uncommitted"><span class="nav-number">3.1.</span> <span class="nav-text">读未提交 Read Uncommitted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读已提交-Read-Uncommitted"><span class="nav-number">3.2.</span> <span class="nav-text">读已提交  Read Uncommitted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可重复读-Repeatable-Read"><span class="nav-number">3.3.</span> <span class="nav-text">可重复读 Repeatable Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#串行化-Serializable"><span class="nav-number">3.4.</span> <span class="nav-text">串行化 Serializable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些数据库支持的隔离级别"><span class="nav-number">3.5.</span> <span class="nav-text">一些数据库支持的隔离级别</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/11/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%85%B6%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库事务及其隔离级别
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-27 16:31:38 / 修改时间：17:43:27" itemprop="dateCreated datePublished" datetime="2020-11-27T16:31:38+08:00">2020-11-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数据库事务"><a href="#数据库事务" class="headerlink" title="数据库事务"></a>数据库事务</h1><p>百度了一下，这篇<a href="https://www.cnblogs.com/shan-kylin/p/9543294.html" target="_blank" rel="noopener">博客</a>写得很好，廖雪峰网站的关于数据库事务的讲解个人认为讲的不好。</p>
+<p>数据库事务(transaction)是访问并可能操作各种数据项的一个数据库操作序列，这些操作要么全部执行,要么全部不执行，是一个不可分割的工作单位。</p>
+<a id="more"></a>
+
+<p>简单来说：</p>
+<p>业务要求某些SQL语句必须作为一个整体全部执行，若执行不完则必须整体回滚，这样的SQL语句整体称为一个数据库事务。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance - <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance = balance + <span class="number">100</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>BEGIN</code>开启一个事务，<code>COMMIT</code>是指提交事务，即试图把事务内的所有SQL所做的修改永久保存。如果<code>COMMIT</code>语句执行失败了，整个事务也会失败。</p>
+<h1 id="数据库的四大特性（ACID）"><a href="#数据库的四大特性（ACID）" class="headerlink" title="数据库的四大特性（ACID）"></a>数据库的四大特性（ACID）</h1><ul>
+<li>原子性 Atomicity</li>
+</ul>
+<p>原子性指数据库事务是执行SQL语句的最小单位，不可以再分割，即指事务包含的<strong>所有操作要么全部成功，要么全部失败回滚</strong>。</p>
+<ul>
+<li>一致性 Consistency</li>
+</ul>
+<p>一致性是指事务必须使数据库从一个<strong>一致性状态</strong>变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。例如A给B汇款，A的存款少了多少，B的存款就会多多少。</p>
+<ul>
+<li>隔离性 Isolation</li>
+</ul>
+<p>数据库事务的操作是相互独立的，不能相互影响。即并发执行的数据库事务必须相互隔离。</p>
+<ul>
+<li>持久性 Durability</li>
+</ul>
+<p>数据库事务在执行之后产生的影响是永久的，即指事务的操作，一旦提交，对于数据库中数据的改变是永久性的。</p>
+<h1 id="数据库事务的隔离级别"><a href="#数据库事务的隔离级别" class="headerlink" title="数据库事务的隔离级别"></a>数据库事务的隔离级别</h1><ul>
+<li><p>读未提交 Read Uncommitted</p>
+</li>
+<li><p>读已提交 Read Committed</p>
+</li>
+<li><p>可重复读 Repeatable Read</p>
+</li>
+<li><p>串行化 Serializable</p>
+</li>
+</ul>
+<p>假设不存在任何隔离级别，若有多个线程同时<strong>读写</strong>数据库，会出现数据不一致的情况。</p>
+<h2 id="读未提交-Read-Uncommitted"><a href="#读未提交-Read-Uncommitted" class="headerlink" title="读未提交 Read Uncommitted"></a>读未提交 Read Uncommitted</h2><p>写数据的时候添加一个X锁（排他锁），也就是在写数据的时候不允许其他事务进行写操作，但是读不受限制，<strong>读不加锁</strong>。这样可以解决多个线程同时写数据导致的数据丢失问题。但是会引起脏读。</p>
+<p>个人理解就是在读未提交的等级下排他锁的释放时间没有放到事务提交时，也可以理解为在读未提交的等级下排他锁限制不了读操作。</p>
+<p>脏读：若线程A的一个事务将某个数据从100修改为120，但没有提交，同时另一个线程B读到了数据为120，若线程A执行的事务回滚，数据被恢复为100，但是线程B读到的数据依旧为120，即出现了脏读。</p>
+<h2 id="读已提交-Read-Uncommitted"><a href="#读已提交-Read-Uncommitted" class="headerlink" title="读已提交  Read Uncommitted"></a>读已提交  Read Uncommitted</h2><p>写数据的时候加上X锁（排他锁），读数据的时候添加S锁（共享锁），而且有约定：<strong>如果一个数据加了X锁就没法加S锁；同理如果加了S锁就没法加X锁，但是一个数据可以同时存在多个S锁（因为只是读数据），并且规定S锁读取数据，一旦读取完成就立刻释放S锁（不管后续是否还有很多其他的操作，只要是读取了S锁的数据后，就立刻释放S锁）。</strong></p>
+<p>个人理解就是排他锁是在事务结束进行释放，而共享锁是在读操作结束后立刻释放，不会等到事务的结束。</p>
+<p>从字面理解“读已提交”就是在数据库事务A已经提交（或者回滚）之后，另一个事务B才能进行读操作，这样可以防止读到没有提交的数据，但是会引起不可重复读的问题。</p>
+<p>不可重复读：假设存在数据项x为100，事务A对x加共享锁，读取完后释放排他锁（注意事务A没有提交），此时事务B改写数据项B为120并提交，事务A再次对x加共享锁，结果读取出x为120，导致前后读取不一致。</p>
+<h2 id="可重复读-Repeatable-Read"><a href="#可重复读-Repeatable-Read" class="headerlink" title="可重复读 Repeatable Read"></a>可重复读 Repeatable Read</h2><p>对S锁进行修改，之前的S锁是：读取了数据之后就立刻释放S锁，现在修改是：在读取数据的时候加上S锁，但是要直到事务准备提交了才释放该S锁，X锁还是一致。</p>
+<p>即所有的锁都等到事务要提交了才释放。</p>
+<p>但是会出现幻读的情况。</p>
+<p>用一个例子解释幻读：</p>
+<p>有一次旺财对一个“学生表”进行操作，选取了年龄是18岁的所有行， 用X锁锁住， 并且做了修改。</p>
+<p>改完以后旺财再次选择所有年龄是18岁的行， 想做一个确认， 没想到有一行竟然没有修改！</p>
+<p>这是怎么回事？ 出了幻觉吗？</p>
+<p>原来就在旺财查询并修改的的时候， 小强也对学生表进行操作， 他插入了一个新的行，其中的年龄也是18岁！</p>
+<p>即幻读是另一个事务的插入操作引起的。</p>
+<h2 id="串行化-Serializable"><a href="#串行化-Serializable" class="headerlink" title="串行化 Serializable"></a>串行化 Serializable</h2><p>要解决幻读则必须所有事务都串行化执行，即所有事务都一件一件执行，不能并行化。</p>
+<h2 id="一些数据库支持的隔离级别"><a href="#一些数据库支持的隔离级别" class="headerlink" title="一些数据库支持的隔离级别"></a>一些数据库支持的隔离级别</h2><p>mysql默认的隔离级别是：可重复读。</p>
+<p>oracle中只支持2个隔离级别：读已提交和串行化，默认是读已提交。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/19/CRUD-boy/" rel="prev" title="CRUD_boy">
+      <i class="fa fa-chevron-left"></i> CRUD_boy
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
