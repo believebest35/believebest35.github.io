@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="一些文档 关于HTTP协议，一篇就够了  十分钟搞懂HTTP和HTTPS协议？  HTTP 协议入门 阮一峰  …   HTTP协议即超文本传输协议，是基于TCP&#x2F;IP协议的应用层协议，是用于从服务器传输超文本到本地浏览器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议基础">
+<meta property="og:url" content="http://believebest35.github.io/2020/12/03/http%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="一些文档 关于HTTP协议，一篇就够了  十分钟搞懂HTTP和HTTPS协议？  HTTP 协议入门 阮一峰  …   HTTP协议即超文本传输协议，是基于TCP&#x2F;IP协议的应用层协议，是用于从服务器传输超文本到本地浏览器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-03T12:23:55.000Z">
+<meta property="article:modified_time" content="2020-12-03T14:17:35.940Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/12/03/http%E5%8D%8F%E8%AE%AE/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HTTP协议基础 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一些文档"><span class="nav-number">1.</span> <span class="nav-text">一些文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些特点"><span class="nav-number">2.</span> <span class="nav-text">一些特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP报文结构"><span class="nav-number">3.</span> <span class="nav-text">HTTP报文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求报文（Request）结构"><span class="nav-number">3.1.</span> <span class="nav-text">请求报文（Request）结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应报文（Response）结构"><span class="nav-number">3.2.</span> <span class="nav-text">响应报文（Response）结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">4.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见请求方法"><span class="nav-number">5.</span> <span class="nav-text">常见请求方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#POST和GET的区别"><span class="nav-number">5.1.</span> <span class="nav-text">POST和GET的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP工作原理"><span class="nav-number">6.</span> <span class="nav-text">HTTP工作原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS协议"><span class="nav-number">7.</span> <span class="nav-text">HTTPS协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用HTTPS传输数据的流程"><span class="nav-number">7.1.</span> <span class="nav-text">使用HTTPS传输数据的流程</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/03/http%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTTP协议基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-03 20:23:55 / 修改时间：22:17:35" itemprop="dateCreated datePublished" datetime="2020-12-03T20:23:55+08:00">2020-12-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一些文档"><a href="#一些文档" class="headerlink" title="一些文档"></a>一些文档</h1><ul>
+<li><p><a href="https://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="noopener">关于HTTP协议，一篇就够了</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/72616216" target="_blank" rel="noopener">十分钟搞懂HTTP和HTTPS协议？</a></p>
+</li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2016/08/http.html" target="_blank" rel="noopener">HTTP 协议入门 阮一峰</a></p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<p>HTTP协议即超文本传输协议，是基于TCP/IP协议的应用层协议，是用于从服务器传输超文本到本地浏览器。</p>
+<a id="more"></a>
+
+<p>HTTP协议工作于客户端-服务端（C-S / B-S）架构之上（B表示Browser）。</p>
+<h1 id="一些特点"><a href="#一些特点" class="headerlink" title="一些特点"></a>一些特点</h1><ul>
+<li><p>简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST</p>
+</li>
+<li><p>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记</p>
+</li>
+<li><p>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接，但是这样不利于客户端与服务器保持会话连接，为了弥补这种不足，产生了两项记录http状态的技术，一个叫做Cookie,一个叫做Session。</p>
+</li>
+<li><p>无状态：无状态是指协议对于事务处理没有记忆，后续处理需要前面的信息，则必须重传</p>
+</li>
+<li><p>支持B-S和C-S模式</p>
+</li>
+<li><p>URI：统一资源标识符</p>
+</li>
+<li><p>URL：统一资源定位符</p>
+</li>
+</ul>
+<h1 id="HTTP报文结构"><a href="#HTTP报文结构" class="headerlink" title="HTTP报文结构"></a>HTTP报文结构</h1><h2 id="请求报文（Request）结构"><a href="#请求报文（Request）结构" class="headerlink" title="请求报文（Request）结构"></a>请求报文（Request）结构</h2><ol>
+<li><p>请求行：包括请求方法、URL、协议/版本</p>
+</li>
+<li><p>请求头(Request Header)</p>
+</li>
+<li><p>空行：请求头和请求正文之间必须有空行</p>
+</li>
+<li><p>请求正文</p>
+</li>
+</ol>
+<h2 id="响应报文（Response）结构"><a href="#响应报文（Response）结构" class="headerlink" title="响应报文（Response）结构"></a>响应报文（Response）结构</h2><ol>
+<li><p>状态行：由HTTP协议版本号，状态码，状态消息三部分组成。</p>
+</li>
+<li><p>响应头：用来说明客户端要使用的一些附加信息</p>
+</li>
+<li><p>空行</p>
+</li>
+<li><p>响应正文：即HTML</p>
+</li>
+</ol>
+<h1 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h1><p>状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:</p>
+<ul>
+<li>1xx：指示信息–表示请求已接收，继续处理</li>
+<li>2xx：成功–表示请求已被成功接收、理解、接受</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作</li>
+<li>4xx：客户端错误–请求有语法错误或请求无法实现</li>
+<li>5xx：服务器端错误–服务器未能实现合法的请求</li>
+</ul>
+<p>常见状态码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">200 OK                        &#x2F;&#x2F;客户端请求成功</span><br><span class="line">400 Bad Request               &#x2F;&#x2F;客户端请求有语法错误，不能被服务器所理解</span><br><span class="line">401 Unauthorized              &#x2F;&#x2F;请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用 </span><br><span class="line">403 Forbidden                 &#x2F;&#x2F;服务器收到请求，但是拒绝提供服务</span><br><span class="line">404 Not Found                 &#x2F;&#x2F;请求资源不存在，eg：输入了错误的URL</span><br><span class="line">500 Internal Server Error     &#x2F;&#x2F;服务器发生不可预期的错误</span><br><span class="line">503 Server Unavailable        &#x2F;&#x2F;服务器当前不能处理客户端的请求，一段时间后可能恢复正常</span><br></pre></td></tr></table></figure>
+
+<h1 id="常见请求方法"><a href="#常见请求方法" class="headerlink" title="常见请求方法"></a>常见请求方法</h1><ul>
+<li><p>GET:请求指定的页面信息，并返回实体主体。</p>
+</li>
+<li><p>POST:向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</p>
+</li>
+<li><p>HEAD:类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头</p>
+</li>
+<li><p>PUT:从客户端向服务器传送的数据取代指定的文档的内容。</p>
+</li>
+<li><p>DELETE:请求服务器删除指定的页面。</p>
+</li>
+</ul>
+<h2 id="POST和GET的区别"><a href="#POST和GET的区别" class="headerlink" title="POST和GET的区别"></a>POST和GET的区别</h2><ul>
+<li><p>都包含请求头请求行，post多了请求body。</p>
+</li>
+<li><p>get多用来查询，请求参数放在url中，不会对服务器上的内容产生作用。post用来提交，如把账号密码放入body中。</p>
+</li>
+<li><p>GET是直接添加到URL后面的，直接就可以在URL中看到内容，而POST是放在报文内部的，用户无法直接看到。</p>
+</li>
+<li><p>GET提交的数据长度是有限制的，因为URL长度有限制，具体的长度限制视浏览器而定。而POST没有。</p>
+</li>
+</ul>
+<h1 id="HTTP工作原理"><a href="#HTTP工作原理" class="headerlink" title="HTTP工作原理"></a>HTTP工作原理</h1><p>HTTP协议定义Web客户端如何从Web服务器请求Web页面，以及服务器如何把Web页面传送给客户端。HTTP协议采用了请求/响应模型。客户端向服务器发送一个请求报文，请求报文包含请求的方法、URL、协议版本、请求头部和请求数据。服务器以一个状态行作为响应，响应的内容包括协议的版本、成功或者错误代码、服务器信息、响应头部和响应数据。</p>
+<p>以下是 HTTP 请求/响应的步骤：</p>
+<ol>
+<li>客户端连接到Web服务器</li>
+</ol>
+<p>一个HTTP客户端，通常是浏览器，与Web服务器的HTTP端口（默认为80）建立一个TCP套接字连接。例如，<a href="http://www.oakcms.cn。" target="_blank" rel="noopener">http://www.oakcms.cn。</a></p>
+<ol start="2">
+<li>发送HTTP请求</li>
+</ol>
+<p>通过TCP套接字，客户端向Web服务器发送一个文本的请求报文，一个请求报文由请求行、请求头部、空行和请求数据4部分组成。</p>
+<ol start="3">
+<li>服务器接受请求并返回HTTP响应</li>
+</ol>
+<p>Web服务器解析请求，定位请求资源。服务器将资源复本写到TCP套接字，由客户端读取。一个响应由状态行、响应头部、空行和响应数据4部分组成。</p>
+<ol start="4">
+<li>释放连接TCP连接</li>
+</ol>
+<p>若connection 模式为close，则服务器主动关闭TCP连接，客户端被动关闭连接，释放TCP连接;若connection 模式为keepalive，则该连接会保持一段时间，在该时间内可以继续接收请求;</p>
+<ol start="5">
+<li>客户端浏览器解析HTML内容</li>
+</ol>
+<p>客户端浏览器首先解析状态行，查看表明请求是否成功的状态代码。然后解析每一个响应头，响应头告知以下为若干字节的HTML文档和文档的字符集。客户端浏览器读取响应数据HTML，根据HTML的语法对其进行格式化，并在浏览器窗口中显示。</p>
+<p>例如：在浏览器地址栏键入URL，按下回车之后会经历以下流程：</p>
+<ol>
+<li><p>浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址;</p>
+</li>
+<li><p>解析出 IP 地址后，根据该 IP 地址和默认端口 80，和服务器建立TCP连接;</p>
+</li>
+<li><p>浏览器发出读取文件(URL 中域名后面部分对应的文件)的HTTP 请求，该请求报文作为 TCP 三次握手的第三个报文的数据发送给服务器;</p>
+</li>
+<li><p>服务器对浏览器请求作出响应，并把对应的 html 文本发送给浏览器;</p>
+</li>
+<li><p>释放 TCP连接;</p>
+</li>
+<li><p>浏览器将该 html 文本并显示内容;</p>
+</li>
+</ol>
+<h1 id="HTTPS协议"><a href="#HTTPS协议" class="headerlink" title="HTTPS协议"></a>HTTPS协议</h1><p>因为HTTP协议以明文传递信息，因此不适合传递敏感信息。</p>
+<p>一般http中存在如下问题：</p>
+<ul>
+<li><p>请求信息明文传输，容易被窃听截取。</p>
+</li>
+<li><p>数据的完整性未校验，容易被篡改</p>
+</li>
+<li><p>没有验证对方身份，存在冒充危险</p>
+</li>
+</ul>
+<p>HTTPS协议（HyperText Transfer Protocol over Secure Socket Layer）：一般理解为HTTP+SSL/TLS，通过 SSL证书来验证服务器的身份，并为浏览器和服务器之间的通信进行加密。</p>
+<h2 id="使用HTTPS传输数据的流程"><a href="#使用HTTPS传输数据的流程" class="headerlink" title="使用HTTPS传输数据的流程"></a>使用HTTPS传输数据的流程</h2><ol>
+<li><p>首先客户端通过URL访问服务器建立SSL连接。</p>
+</li>
+<li><p>服务端收到客户端请求后，会将网站支持的证书信息（证书中包含公钥）传送一份给客户端。</p>
+</li>
+<li><p>客户端的服务器开始协商SSL连接的安全等级，也就是信息加密的等级。</p>
+</li>
+<li><p>客户端的浏览器根据双方同意的安全等级，建立会话密钥，然后利用网站的公钥将会话密钥加密，并传送给网站。</p>
+</li>
+<li><p>服务器利用自己的私钥解密出会话密钥。</p>
+</li>
+<li><p>服务器利用会话密钥加密与客户端之间的通信。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/27/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E5%8F%8A%E5%85%B6%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" rel="prev" title="数据库事务及其隔离级别">
+      <i class="fa fa-chevron-left"></i> 数据库事务及其隔离级别
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
