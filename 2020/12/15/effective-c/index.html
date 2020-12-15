@@ -22,19 +22,20 @@
     var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的 C++是一种语言集合。 View c++ as a federation of languages.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://believebest35.github.io/2020/07/19/hello-world/index.html">
+<meta property="og:title" content="effective_c++ 章节1">
+<meta property="og:url" content="http://believebest35.github.io/2020/12/15/effective-c/index.html">
 <meta property="og:site_name" content="Xinrui Tang">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的 C++是一种语言集合。 View c++ as a federation of languages.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-19T15:31:33.751Z">
-<meta property="article:modified_time" content="2020-10-13T12:28:08.020Z">
+<meta property="article:published_time" content="2020-12-15T14:34:24.000Z">
+<meta property="article:modified_time" content="2020-12-15T15:26:03.592Z">
 <meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://believebest35.github.io/2020/07/19/hello-world/">
+<link rel="canonical" href="http://believebest35.github.io/2020/12/15/effective-c/">
 
 
 <script class="page-configurations">
@@ -47,7 +48,7 @@
   };
 </script>
 
-  <title>Hello World | Xinrui Tang</title>
+  <title>effective_c++ 章节1 | Xinrui Tang</title>
   
 
 
@@ -148,7 +149,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-是一种语言集合。"><span class="nav-number">1.</span> <span class="nav-text">C++是一种语言集合。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽量以const，enum，inline-替换-define"><span class="nav-number">2.</span> <span class="nav-text">尽量以const，enum，inline 替换 #define</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽可能使用const"><span class="nav-number">3.</span> <span class="nav-text">尽可能使用const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确保对象使用前已经被初始化"><span class="nav-number">4.</span> <span class="nav-text">确保对象使用前已经被初始化</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -204,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/07/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/15/effective-c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -217,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          effective_c++ 章节1
         </h1>
 
         <div class="post-meta">
@@ -226,16 +227,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-07-19 23:31:33" itemprop="dateCreated datePublished" datetime="2020-07-19T23:31:33+08:00">2020-07-19</time>
+              <time title="创建时间：2020-12-15 22:34:24 / 修改时间：23:26:03" itemprop="dateCreated datePublished" datetime="2020-12-15T22:34:24+08:00">2020-12-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-13 20:28:08" itemprop="dateModified" datetime="2020-10-13T20:28:08+08:00">2020-10-13</time>
-              </span>
 
           
 
@@ -248,21 +243,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><a id="more"></a>
+        <p>自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的</p>
+<h2 id="C-是一种语言集合。"><a href="#C-是一种语言集合。" class="headerlink" title="C++是一种语言集合。"></a>C++是一种语言集合。</h2><blockquote>
+<p>View c++ as a federation of languages.</p>
+</blockquote>
+<a id="more"></a>
 
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>C++对于我绝大多数时候都只是C with STL或者C with Classes，其模板、泛型编程特性极少接触到，而C++是一个具有多种语言特性的语言集合，包括：</p>
+<ul>
+<li>C</li>
+</ul>
+<p>C++本质上还是C语言的超集。</p>
+<ul>
+<li>Object-Oriented C++</li>
+</ul>
+<p>C++是面向对象的语言。</p>
+<ul>
+<li>Template C++</li>
+</ul>
+<p>泛型</p>
+<ul>
+<li>STL</li>
+</ul>
+<p>C++提供的一堆模板程序库。</p>
+<h2 id="尽量以const，enum，inline-替换-define"><a href="#尽量以const，enum，inline-替换-define" class="headerlink" title="尽量以const，enum，inline 替换 #define"></a>尽量以const，enum，inline 替换 #define</h2><blockquote>
+<p>Prefer consts,enums, and inlines to #defines.</p>
+</blockquote>
+<p>尽量少使用宏定义。</p>
+<p>原文关于#define的缺陷有很多讨论，一个最经典的例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> square(x) x * x</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; square(<span class="number">2</span> + <span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>以上的代码在经过预处理之后会变成 2 + 1 * 2 + 1，出现极其危险的错误，因此尝试用内联函数来替代。</p>
+<h2 id="尽可能使用const"><a href="#尽可能使用const" class="headerlink" title="尽可能使用const"></a>尽可能使用const</h2><blockquote>
+<p>Use const whenever possible.</p>
+</blockquote>
+<p>const表示常量，但是经常和指针混在一起，导致不好辨别其语义。</p>
+<p>一个简单的辨别方法：</p>
+<p>const在星号左边表示被指物是常量，const在星号右边表示指针自身是常量，同时出现在两边表示被指物和指针都是常量。</p>
+<h2 id="确保对象使用前已经被初始化"><a href="#确保对象使用前已经被初始化" class="headerlink" title="确保对象使用前已经被初始化"></a>确保对象使用前已经被初始化</h2><blockquote>
+<p>Make sure that objects are initialized before they’re used.</p>
+</blockquote>
+<p>主要来自于c语言的历史遗留。</p>
 
     </div>
 
@@ -271,17 +292,20 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/07/22/leetcode-solution-1/" rel="next" title="leetcode 剑指offer 11 旋转数组的最小数字">
-      leetcode 剑指offer 11 旋转数组的最小数字 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/12/07/Java-5/" rel="prev" title="Java集合类型">
+      <i class="fa fa-chevron-left"></i> Java集合类型
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
