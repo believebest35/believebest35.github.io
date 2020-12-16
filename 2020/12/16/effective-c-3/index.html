@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的 C++是一种语言集合。 View c++ as a federation of languages.">
+  <meta name="description" content="第三章中涉及到C++中的资源管理。不同于Java等其他语言，C++中可以自行管理内存，因此容易出现内存泄漏的情况，正确的进行资源管理是十分重要的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="effective_c++ 章节1">
-<meta property="og:url" content="http://believebest35.github.io/2020/12/15/effective-c/index.html">
+<meta property="og:title" content="effective_c++ 章节3">
+<meta property="og:url" content="http://believebest35.github.io/2020/12/16/effective-c-3/index.html">
 <meta property="og:site_name" content="Xinrui Tang">
-<meta property="og:description" content="自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的 C++是一种语言集合。 View c++ as a federation of languages.">
+<meta property="og:description" content="第三章中涉及到C++中的资源管理。不同于Java等其他语言，C++中可以自行管理内存，因此容易出现内存泄漏的情况，正确的进行资源管理是十分重要的。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-12-15T14:34:24.000Z">
-<meta property="article:modified_time" content="2020-12-15T15:26:03.592Z">
+<meta property="article:published_time" content="2020-12-16T06:58:49.000Z">
+<meta property="article:modified_time" content="2020-12-16T08:00:32.746Z">
 <meta property="article:author" content="Xinrui Tang">
 <meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://believebest35.github.io/2020/12/15/effective-c/">
+<link rel="canonical" href="http://believebest35.github.io/2020/12/16/effective-c-3/">
 
 
 <script class="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>effective_c++ 章节1 | Xinrui Tang</title>
+  <title>effective_c++ 章节3 | Xinrui Tang</title>
   
 
 
@@ -149,7 +149,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-是一种语言集合。"><span class="nav-number">1.</span> <span class="nav-text">C++是一种语言集合。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽量以const，enum，inline-替换-define"><span class="nav-number">2.</span> <span class="nav-text">尽量以const，enum，inline 替换 #define</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽可能使用const"><span class="nav-number">3.</span> <span class="nav-text">尽可能使用const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确保对象使用前已经被初始化"><span class="nav-number">4.</span> <span class="nav-text">确保对象使用前已经被初始化</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#以对象管理资源"><span class="nav-number">1.</span> <span class="nav-text">以对象管理资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在资源管理类中小心copy行为"><span class="nav-number">2.</span> <span class="nav-text">在资源管理类中小心copy行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在资源管理类中提供对原始资源的访问。"><span class="nav-number">3.</span> <span class="nav-text">在资源管理类中提供对原始资源的访问。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成对使用new和delete需要采取相同的形式。"><span class="nav-number">4.</span> <span class="nav-text">成对使用new和delete需要采取相同的形式。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以单独的语句将newed对象置入shared-ptr。"><span class="nav-number">5.</span> <span class="nav-text">以单独的语句将newed对象置入shared_ptr。</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -205,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/15/effective-c/">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/16/effective-c-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          effective_c++ 章节1
+          effective_c++ 章节3
         </h1>
 
         <div class="post-meta">
@@ -229,7 +229,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-12-15 22:34:24 / 修改时间：23:26:03" itemprop="dateCreated datePublished" datetime="2020-12-15T22:34:24+08:00">2020-12-15</time>
+              <time title="创建时间：2020-12-16 14:58:49 / 修改时间：16:00:32" itemprop="dateCreated datePublished" datetime="2020-12-16T14:58:49+08:00">2020-12-16</time>
             </span>
 
           
@@ -243,47 +243,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>自己对于C++的了解十分肤浅，因此有必要学习一下Effective C++这本书，虽然这本书似乎没有描述C++11的新特性，但是还是值得一读的</p>
-<h2 id="C-是一种语言集合。"><a href="#C-是一种语言集合。" class="headerlink" title="C++是一种语言集合。"></a>C++是一种语言集合。</h2><blockquote>
-<p>View c++ as a federation of languages.</p>
-</blockquote>
+        <p>第三章中涉及到C++中的资源管理。不同于Java等其他语言，C++中可以自行管理内存，因此容易出现内存泄漏的情况，正确的进行资源管理是十分重要的。</p>
 <a id="more"></a>
 
-<p>C++对于我绝大多数时候都只是C with STL或者C with Classes，其模板、泛型编程特性极少接触到，而C++是一个具有多种语言特性的语言集合，包括：</p>
-<ul>
-<li>C</li>
-</ul>
-<p>C++本质上还是C语言的超集。</p>
-<ul>
-<li>Object-Oriented C++</li>
-</ul>
-<p>C++是面向对象的语言。</p>
-<ul>
-<li>Template C++</li>
-</ul>
-<p>泛型</p>
-<ul>
-<li>STL</li>
-</ul>
-<p>C++提供的一堆模板程序库。</p>
-<h2 id="尽量以const，enum，inline-替换-define"><a href="#尽量以const，enum，inline-替换-define" class="headerlink" title="尽量以const，enum，inline 替换 #define"></a>尽量以const，enum，inline 替换 #define</h2><blockquote>
-<p>Prefer consts,enums, and inlines to #defines.</p>
+<h2 id="以对象管理资源"><a href="#以对象管理资源" class="headerlink" title="以对象管理资源"></a>以对象管理资源</h2><blockquote>
+<p>Use objects to manage resources.</p>
 </blockquote>
-<p>尽量少使用宏定义。</p>
-<p>原文关于#define的缺陷有很多讨论，一个最经典的例子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> square(x) x * x</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; square(<span class="number">2</span> + <span class="number">1</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获得了资源后需要立刻放进资源管理对象，通过对资源管理对象的析构来释放资源。即不要自行手动释放资源，将任何资源的释放放在析构函数中进行。</p>
+<p>常见的自动管理资源的类是所谓的“智能指针”，关于智能指针需要单独学习。</p>
+<h2 id="在资源管理类中小心copy行为"><a href="#在资源管理类中小心copy行为" class="headerlink" title="在资源管理类中小心copy行为"></a>在资源管理类中小心copy行为</h2><blockquote>
+<p>Think carefully about copying behavior in resource-managing classes.</p>
+</blockquote>
+<p>RAII（Resource Acquisition Is Initialization）观念表示获得资源即是初始化，即资源在构造期间获得，在析构期间释放。</p>
+<p>这里的问题在于如果需要自行实现类似智能指针的资源管理类，需要格外小心对于资源管理对象的复制行为，具体参看<a href="https://www.cnblogs.com/lwenwen/p/3472312.html" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="在资源管理类中提供对原始资源的访问。"><a href="#在资源管理类中提供对原始资源的访问。" class="headerlink" title="在资源管理类中提供对原始资源的访问。"></a>在资源管理类中提供对原始资源的访问。</h2><blockquote>
+<p>Provide access to raw resources in resource-managing classes.</p>
+</blockquote>
+<p>例如智能指针这样的资源管理类相当于在原始的资源上加了一层包装，但一些函数参数仅仅接收原始类型的指针或者引用，因此需要资源管理类提供对应的接口返回原始资源。例如智能指针的get方法。</p>
+<h2 id="成对使用new和delete需要采取相同的形式。"><a href="#成对使用new和delete需要采取相同的形式。" class="headerlink" title="成对使用new和delete需要采取相同的形式。"></a>成对使用new和delete需要采取相同的形式。</h2><blockquote>
+<p>Use the same form in corresponding uses of new and delete.</p>
+</blockquote>
+<p>使用<code>new</code>申请的，用<code>delete</code>释放，使用<code>new[]</code>申请的，用<code>delete[]</code>释放。</p>
+<h2 id="以单独的语句将newed对象置入shared-ptr。"><a href="#以单独的语句将newed对象置入shared-ptr。" class="headerlink" title="以单独的语句将newed对象置入shared_ptr。"></a>以单独的语句将newed对象置入shared_ptr。</h2><blockquote>
+<p>Store newed objects in smart pointers in standalone statements.</p>
+</blockquote>
+<p>不要写下这样的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Function(<span class="built_in">shared_ptr</span>&lt;Class&gt;(<span class="keyword">new</span> Class), x())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>以上的代码在经过预处理之后会变成 2 + 1 * 2 + 1，出现极其危险的错误，因此尝试用内联函数来替代。</p>
-<h2 id="尽可能使用const"><a href="#尽可能使用const" class="headerlink" title="尽可能使用const"></a>尽可能使用const</h2><blockquote>
-<p>Use const whenever possible.</p>
-</blockquote>
-<p>const表示常量，但是经常和指针混在一起，导致不好辨别其语义。</p>
-<p>一个简单的辨别方法：</p>
-<p>const在星号左边表示被指物是常量，const在星号右边表示指针自身是常量，同时出现在两边表示被指物和指针都是常量。</p>
-<h2 id="确保对象使用前已经被初始化"><a href="#确保对象使用前已经被初始化" class="headerlink" title="确保对象使用前已经被初始化"></a>确保对象使用前已经被初始化</h2><blockquote>
-<p>Make sure that objects are initialized before they’re used.</p>
-</blockquote>
-<p>主要来自于c语言的历史遗留。</p>
+<p>原因在于shared_ptr的构造分为两步，第一步是new Class创建一个对象，第二部是执行构造函数，但是像上面那样写可能导致x()在两步之间运行（与编译器如何编译代码有关了），如果这个时候x()发生了异常，那么就会导致内存泄漏。因此初始化shared_ptr的时候，最好不要掺杂其他东西。</p>
 
     </div>
 
@@ -302,13 +289,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/12/07/Java-5/" rel="prev" title="Java集合类型">
-      <i class="fa fa-chevron-left"></i> Java集合类型
+    <a href="/2020/12/16/effective-c-2/" rel="prev" title="effective_c++ 章节2">
+      <i class="fa fa-chevron-left"></i> effective_c++ 章节2
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/12/16/effective-c-2/" rel="next" title="effective_c++ 章节2">
-      effective_c++ 章节2 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
