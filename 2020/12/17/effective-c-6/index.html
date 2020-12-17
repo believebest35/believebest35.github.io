@@ -22,20 +22,20 @@
     var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="Leetcode 60 第k个排列leetcode 60 题目描述给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。按大小顺序列出所有排列情况，并一一标记，当 n &#x3D; 3 时, 所有排列如下：  “123” “132” “213” “231” “312” “321”">
+  <meta name="description" content="第六章主题：继承与面向对象设计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode 60 第k个排列">
-<meta property="og:url" content="http://believebest35.github.io/2020/09/05/leetcode-solution-7/index.html">
+<meta property="og:title" content="effective_c++ 章节6">
+<meta property="og:url" content="http://believebest35.github.io/2020/12/17/effective-c-6/index.html">
 <meta property="og:site_name" content="Xinrui Tang">
-<meta property="og:description" content="Leetcode 60 第k个排列leetcode 60 题目描述给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。按大小顺序列出所有排列情况，并一一标记，当 n &#x3D; 3 时, 所有排列如下：  “123” “132” “213” “231” “312” “321”">
+<meta property="og:description" content="第六章主题：继承与面向对象设计">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-05T07:14:39.000Z">
-<meta property="article:modified_time" content="2020-10-13T12:26:34.437Z">
+<meta property="article:published_time" content="2020-12-17T07:32:49.000Z">
+<meta property="article:modified_time" content="2020-12-17T11:52:58.665Z">
 <meta property="article:author" content="Xinrui Tang">
-<meta property="article:tag" content="leetcode_solution">
+<meta property="article:tag" content="c++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://believebest35.github.io/2020/09/05/leetcode-solution-7/">
+<link rel="canonical" href="http://believebest35.github.io/2020/12/17/effective-c-6/">
 
 
 <script class="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>leetcode 60 第k个排列 | Xinrui Tang</title>
+  <title>effective_c++ 章节6 | Xinrui Tang</title>
   
 
 
@@ -149,7 +149,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Leetcode-60-第k个排列"><span class="nav-number">1.</span> <span class="nav-text">Leetcode 60 第k个排列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目描述"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.1.1.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解法"><span class="nav-number">1.1.2.</span> <span class="nav-text">解法</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#确保public型继承是is-a关系"><span class="nav-number">1.</span> <span class="nav-text">确保public型继承是is-a关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名称遮掩问题"><span class="nav-number">2.</span> <span class="nav-text">名称遮掩问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区分接口继承和实现继承"><span class="nav-number">3.</span> <span class="nav-text">区分接口继承和实现继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑虚函数以外的其他选择"><span class="nav-number">4.</span> <span class="nav-text">考虑虚函数以外的其他选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要重新定义继承来的non-virtual函数"><span class="nav-number">5.</span> <span class="nav-text">不要重新定义继承来的non-virtual函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绝不重新定义继承而来的缺省参数值"><span class="nav-number">6.</span> <span class="nav-text">绝不重新定义继承而来的缺省参数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类与类之间的复合关系表示has-a关系"><span class="nav-number">7.</span> <span class="nav-text">类与类之间的复合关系表示has-a关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有继承"><span class="nav-number">8.</span> <span class="nav-text">私有继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小心使用多重继承"><span class="nav-number">9.</span> <span class="nav-text">小心使用多重继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附"><span class="nav-number">10.</span> <span class="nav-text">附</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -205,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/09/05/leetcode-solution-7/">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/17/effective-c-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          leetcode 60 第k个排列
+          effective_c++ 章节6
         </h1>
 
         <div class="post-meta">
@@ -227,16 +227,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-05 15:14:39" itemprop="dateCreated datePublished" datetime="2020-09-05T15:14:39+08:00">2020-09-05</time>
+              <time title="创建时间：2020-12-17 15:32:49 / 修改时间：19:52:58" itemprop="dateCreated datePublished" datetime="2020-12-17T15:32:49+08:00">2020-12-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-13 20:26:34" itemprop="dateModified" datetime="2020-10-13T20:26:34+08:00">2020-10-13</time>
-              </span>
 
           
 
@@ -249,28 +243,56 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Leetcode-60-第k个排列"><a href="#Leetcode-60-第k个排列" class="headerlink" title="Leetcode 60 第k个排列"></a>Leetcode 60 第k个排列</h1><p><a href="https://leetcode-cn.com/problems/permutation-sequence/" target="_blank" rel="noopener">leetcode 60</a></p>
-<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：</p>
-<ol>
-<li>“123”</li>
-<li>“132”</li>
-<li>“213”</li>
-<li>“231”</li>
-<li>“312”</li>
-<li>“321”</li>
-</ol>
+        <p>第六章主题：继承与面向对象设计</p>
 <a id="more"></a>
 
-<p>给定 n 和 k，返回第 k 个排列。</p>
-<p>说明：</p>
+<h2 id="确保public型继承是is-a关系"><a href="#确保public型继承是is-a关系" class="headerlink" title="确保public型继承是is-a关系"></a>确保public型继承是is-a关系</h2><blockquote>
+<p>Make sure public inheritance models “is-a.”</p>
+</blockquote>
+<h2 id="名称遮掩问题"><a href="#名称遮掩问题" class="headerlink" title="名称遮掩问题"></a>名称遮掩问题</h2><blockquote>
+<p>Avoid hiding inherited names.</p>
+</blockquote>
+<p>子类会遮掩父类同名的函数，可以使用类名作用域决定调用父类还是子类的函数。</p>
+<h2 id="区分接口继承和实现继承"><a href="#区分接口继承和实现继承" class="headerlink" title="区分接口继承和实现继承"></a>区分接口继承和实现继承</h2><blockquote>
+<p>Differentiate between inheritance of interface and inheritance of implementation.</p>
+</blockquote>
+<p>区分基类中的三种成员函数：</p>
 <ul>
-<li>给定 n 的范围是 [1, 9]。</li>
-<li>给定 k 的范围是[1,  n!]。</li>
+<li>纯虚函数</li>
+<li>非纯虚函数</li>
+<li>普通函数</li>
 </ul>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>输入: n = 3, k = 3<br>输出: “213”</p>
-<p>输入: n = 4, k = 9<br>输出: “2314”</p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>依次固定每一位的取值即可,注意是从0开始计数的因此k需要减1，当k到0的时候就可以直接将剩下的数字直接接在最后。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">getPermutation</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; fac = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">24</span>, <span class="number">120</span>, <span class="number">720</span>, <span class="number">5040</span>, <span class="number">40320</span>, <span class="number">362880</span>&#125;;</span><br><span class="line">        <span class="built_in">string</span> s = <span class="built_in">string</span>(<span class="string">"123456789"</span>).substr(<span class="number">0</span>, n);</span><br><span class="line">        k--;</span><br><span class="line">        <span class="built_in">string</span> ans = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> id = k / fac[n - <span class="number">1</span>];</span><br><span class="line">            ans += s[id];</span><br><span class="line">            s.erase(s.<span class="built_in">begin</span>() + id);</span><br><span class="line">            k %= fac[n - <span class="number">1</span>];</span><br><span class="line">            n--;</span><br><span class="line">        &#125;</span><br><span class="line">        ans += s;</span><br><span class="line">        <span class="keyword">return</span> ans;   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中纯虚函数只提供接口，派生类一般需要提供对于纯虚函数的一个实现版本。</p>
+<p>非纯虚函数也提供了接口，不过基类为派生类提供了一个默认的实现版本。</p>
+<p>普通函数会联同实现一起传递给派生类。</p>
+<h2 id="考虑虚函数以外的其他选择"><a href="#考虑虚函数以外的其他选择" class="headerlink" title="考虑虚函数以外的其他选择"></a>考虑虚函数以外的其他选择</h2><blockquote>
+<p>Consider alternatives to virtual functions.</p>
+</blockquote>
+<p>这一条说明的是可以通过其他方式实现和虚函数一样的功能，例如模板方法模式以及策略模式。</p>
+<h2 id="不要重新定义继承来的non-virtual函数"><a href="#不要重新定义继承来的non-virtual函数" class="headerlink" title="不要重新定义继承来的non-virtual函数"></a>不要重新定义继承来的non-virtual函数</h2><blockquote>
+<p>Never redefine an inherited non-virtual function.</p>
+</blockquote>
+<p>因为非虚函数不是动态绑定的，在派生类中重新定义函数会使得基类中的同名函数被屏蔽。</p>
+<h2 id="绝不重新定义继承而来的缺省参数值"><a href="#绝不重新定义继承而来的缺省参数值" class="headerlink" title="绝不重新定义继承而来的缺省参数值"></a>绝不重新定义继承而来的缺省参数值</h2><blockquote>
+<p>Never redefine a function’s inherited default parameter value.</p>
+</blockquote>
+<p>默认参数都是静态绑定的，即你的指针是什么类型，默认参数就是什么类型。而virtual函数是动态绑定的，在运行期才决定调用哪个函数。所以如果你在父类class Father有一个virtual函数并带有默认参数，例如void p(int default = 100)，在子类重写这个函数，然后换了新的默认参数为default = 10，在你以多态的方式调用p的时候：Father* f = new Son(); f-&gt;p();这种情况p的默认参数为100而非10。因为f指针的静态类型为Father，而动态类型为Son。所以如果你的函数必须包含默认参数，不要这样写，解决方法是将带有默认参数的函数改为non-virtual函数，内部再调用一个virtual函数。因为non-virtual函数是从来不应该被重写的（上一个条款，覆盖问题）。</p>
+<h2 id="类与类之间的复合关系表示has-a关系"><a href="#类与类之间的复合关系表示has-a关系" class="headerlink" title="类与类之间的复合关系表示has-a关系"></a>类与类之间的复合关系表示has-a关系</h2><blockquote>
+<p>Model “has-a” or “is-implemented-in-terms-of’ through composition.</p>
+</blockquote>
+<p>一个类（A）中的成员包含另一个类（B）的成员，则说明A由B组成，或者说A含有B。</p>
+<h2 id="私有继承"><a href="#私有继承" class="headerlink" title="私有继承"></a>私有继承</h2><blockquote>
+<p>Use private inheritance judiciously.</p>
+</blockquote>
+<p>private继承一般很少使用，可以通过组合来进行替代（即has-a关系）。</p>
+<h2 id="小心使用多重继承"><a href="#小心使用多重继承" class="headerlink" title="小心使用多重继承"></a>小心使用多重继承</h2><blockquote>
+<p>Use multiple inheritance judiciously.</p>
+</blockquote>
+<p>多重继承出现的机会不是很多，尽量少使用，而Java直接取消了多重继承。</p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><p>书的第七章讨论了模版与泛型编程，由于目前关于泛型的知识较少，暂时跳过。</p>
+<p>第八章主要讨论了一些关于new和delete的高级用法。</p>
+<p>关于new和delete的一些基础知识可参见这篇<a href="https://www.cnblogs.com/deepllz/p/9927807.html" target="_blank" rel="noopener">博客</a>。</p>
+
     </div>
 
     
@@ -279,7 +301,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/leetcode-solution/" rel="tag"># leetcode_solution</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
           </div>
 
         
@@ -288,13 +310,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/27/leetcode-solution-6/" rel="prev" title="leetcode 329 矩阵中的最长递增路径">
-      <i class="fa fa-chevron-left"></i> leetcode 329 矩阵中的最长递增路径
+    <a href="/2020/12/17/effective-c-5/" rel="prev" title="effective_c++ 章节5">
+      <i class="fa fa-chevron-left"></i> effective_c++ 章节5
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/09/15/data-structure-post-1/" rel="next" title="数据结构基础">
-      数据结构基础 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
