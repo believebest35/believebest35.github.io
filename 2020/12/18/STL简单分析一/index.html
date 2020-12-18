@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"believebest35.github.io","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="C++中的STL是一个极其复杂的东西，这里十分简单的梳理一下STL的大概。 这一部分需要配合stl源码剖析和侯捷的相关视频服用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STL简单分析一 分配器">
+<meta property="og:url" content="http://believebest35.github.io/2020/12/18/STL%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90%E4%B8%80/index.html">
+<meta property="og:site_name" content="Xinrui Tang">
+<meta property="og:description" content="C++中的STL是一个极其复杂的东西，这里十分简单的梳理一下STL的大概。 这一部分需要配合stl源码剖析和侯捷的相关视频服用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-9de8f39de5157f52f3630bdd4619e906_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-0f636198bb482aea31ef01d48e5a233e_1440w.jpg">
+<meta property="article:published_time" content="2020-12-18T08:46:11.000Z">
+<meta property="article:modified_time" content="2020-12-18T15:28:00.880Z">
+<meta property="article:author" content="Xinrui Tang">
+<meta property="article:tag" content="stl">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/v2-9de8f39de5157f52f3630bdd4619e906_r.jpg">
+
+<link rel="canonical" href="http://believebest35.github.io/2020/12/18/STL%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90%E4%B8%80/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>STL简单分析一 分配器 | Xinrui Tang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Xinrui Tang</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#STL六大部件"><span class="nav-number">1.</span> <span class="nav-text">STL六大部件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分配器"><span class="nav-number">2.</span> <span class="nav-text">分配器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准配置器-std-allocator"><span class="nav-number">2.1.</span> <span class="nav-text">标准配置器 std::allocator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊配置器-std-alloc"><span class="nav-number">2.2.</span> <span class="nav-text">特殊配置器 std::alloc</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器"><span class="nav-number">3.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列式容器"><span class="nav-number">3.1.</span> <span class="nav-text">序列式容器</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xinrui Tang</p>
+  <div class="site-description" itemprop="description">这里是我写一些无聊的东西的地方</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://believebest35.github.io/2020/12/18/STL%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xinrui Tang">
+      <meta itemprop="description" content="这里是我写一些无聊的东西的地方">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xinrui Tang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STL简单分析一 分配器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-18 16:46:11 / 修改时间：23:28:00" itemprop="dateCreated datePublished" datetime="2020-12-18T16:46:11+08:00">2020-12-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>C++中的STL是一个极其复杂的东西，这里十分简单的梳理一下STL的大概。</p>
+<p>这一部分需要配合stl源码剖析和侯捷的相关<a href="https://www.bilibili.com/video/BV1db411q7B8?p=11" target="_blank" rel="noopener">视频</a>服用。</p>
+<a id="more"></a>
+
+<h1 id="STL六大部件"><a href="#STL六大部件" class="headerlink" title="STL六大部件"></a>STL六大部件</h1><ul>
+<li>容器</li>
+<li>分配器</li>
+<li>算法</li>
+<li>迭代器</li>
+<li>适配器</li>
+<li>仿函数</li>
+</ul>
+<h1 id="分配器"><a href="#分配器" class="headerlink" title="分配器"></a>分配器</h1><p>在平时的编程中很难见到分配器，而使用STL中的模板类不可避免的涉及到关于空间的申请和释放，而STL向用户屏蔽了空间申请和回收的机制，这一机制正是靠空间分配器来完成的。</p>
+<p>比如使用一个模版</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br></pre></td></tr></table></figure>
+
+<p>模板vector具体化只指定了一个参数，而vector的源码中，其定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>, <span class="title">class</span> <span class="title">Allocator</span> = <span class="title">allocator</span>&lt;T&gt; &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中被省略的参数allocator就是空间分配器，而一般的用户程序员也不需要知道空间分配器的存在。</p>
+<p>可参见这条<a href="https://zhuanlan.zhihu.com/p/34725232" target="_blank" rel="noopener">回答</a></p>
+<p><img src="https://pic3.zhimg.com/v2-9de8f39de5157f52f3630bdd4619e906_r.jpg" alt="盗图1"></p>
+<p>allocator除了完成空间的分配以及释放之外，还要完成对象的构造和析构，所以一般只需要关注allocate，deallocate，construct和destroy函数的实现即可，整个allocator最重要的函数就是这四个。</p>
+<p>STL源码剖析给出了一个最简单的分配器实现。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _MYALLOC_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _MYALLOC_</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;new&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstddef&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> my_alloc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// allocate的实际实现，简单封装new，当无法获得内存时，报错并退出</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">inline</span> <span class="title">T</span>* _<span class="title">allocate</span>(<span class="title">ptrdiff_t</span> <span class="title">size</span>, <span class="title">T</span>*) &#123;</span></span><br><span class="line">        set_new_handler(<span class="number">0</span>);</span><br><span class="line">        T* tmp = (T*)(::<span class="keyword">operator</span> <span class="keyword">new</span>((<span class="keyword">size_t</span>)(<span class="built_in">size</span> * <span class="keyword">sizeof</span>(T))));</span><br><span class="line">        <span class="keyword">if</span> (tmp == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">cerr</span> &lt;&lt; <span class="string">"out of memory"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// deallocate的实际实现，简单封装delete</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">inline</span> <span class="title">void</span> _<span class="title">deallocate</span>(<span class="title">T</span>* <span class="title">buffer</span>) &#123;</span> ::<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="built_in">buffer</span>)</span></span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// construct的实际实现，直接调用对象的构造函数</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T1</span>, <span class="title">class</span> <span class="title">T2</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">inline</span> <span class="title">void</span> _<span class="title">construct</span>(<span class="title">T1</span>* <span class="title">p</span>, <span class="title">const</span> <span class="title">T2</span>&amp; <span class="title">value</span>) &#123;</span> <span class="keyword">new</span>(p) T1(value); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// destroy的实际实现，直接调用对象的析构函数</span></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">inline</span> <span class="title">void</span> _<span class="title">destroy</span>(<span class="title">T</span>* <span class="title">ptr</span>) &#123;</span> ptr-&gt;~T(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">allocator</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="keyword">typedef</span> T           value_type;</span><br><span class="line">        <span class="keyword">typedef</span> T*          pointer;</span><br><span class="line">        <span class="keyword">typedef</span> <span class="keyword">const</span> T*    const_pointer;</span><br><span class="line">        <span class="keyword">typedef</span> T&amp;          reference;</span><br><span class="line">        <span class="keyword">typedef</span> <span class="keyword">const</span> T&amp;    const_reference;</span><br><span class="line">        <span class="keyword">typedef</span> <span class="keyword">size_t</span>      size_type;</span><br><span class="line">        <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>   difference_type;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构造函数</span></span><br><span class="line">        allocator()&#123; <span class="keyword">return</span>; &#125;</span><br><span class="line">        <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">U</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="title">allocator</span>(<span class="title">const</span> <span class="title">allocator</span>&lt;U&gt;&amp; <span class="title">c</span>)&#123;</span>&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// rebind allocator of type U</span></span><br><span class="line">        <span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">U</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="title">struct</span> <span class="title">rebind</span> &#123;</span> <span class="keyword">typedef</span> allocator&lt;U&gt; other; &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// allocate，deallocate，construct和destroy函数均调用上面的实际实现</span></span><br><span class="line">        <span class="comment">// hint used for locality. ref.[Austern],p189</span></span><br><span class="line">        <span class="function">pointer <span class="title">allocate</span><span class="params">(size_type n, <span class="keyword">const</span> <span class="keyword">void</span>* hint = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> _allocate((difference_type)n, (pointer)<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(pointer p, size_type n)</span> </span>&#123; _deallocate(p); &#125;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">construct</span><span class="params">(pointer p, <span class="keyword">const</span> T&amp; value)</span> </span>&#123; _construct(p, value); &#125;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">(pointer p)</span> </span>&#123; _destroy(p); &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">pointer <span class="title">address</span><span class="params">(reference x)</span> </span>&#123; <span class="keyword">return</span> (pointer)&amp;x; &#125;</span><br><span class="line">        <span class="function">const_pointer <span class="title">const_address</span><span class="params">(const_reference x)</span> </span>&#123; <span class="keyword">return</span> (const_pointer)&amp;x; &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> size_type(UINT_MAX / <span class="keyword">sizeof</span>(T)); &#125;   </span><br><span class="line">    &#125;;</span><br><span class="line">&#125; <span class="comment">// end of namespace myalloc</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// _MYALLOC_</span></span></span><br></pre></td></tr></table></figure>
+
+<p>上面的源码大概可以看出allocate是对_allocate的封装，最终实际上调用了operator new，而operator new实际最终调用了malloc（经过层层套娃😂），同理deallocate最后转化为对free的调用，construct实际上最终调用的就是对象的构造函数，而destroy最终调用的就是对象的析构函数。</p>
+<p>虽然以上的分配器符合STL标准，但实际并不会使用，因为SGI STL的allocator并不完全符合STL规范，SGI STL实现了两个allocator：一个是标准的std::allocator，另一个是特殊的std::alloc。</p>
+<h2 id="标准配置器-std-allocator"><a href="#标准配置器-std-allocator" class="headerlink" title="标准配置器 std::allocator"></a>标准配置器 std::allocator</h2><p>这个allocator部分符合STL标准，但是SGI STL的容器并不使用它，也不建议我们使用，它存在的意义仅在于为用户提供一个兼容老代码的折衷方法，其实现仅仅是对new和delete的简单包装。</p>
+<h2 id="特殊配置器-std-alloc"><a href="#特殊配置器-std-alloc" class="headerlink" title="特殊配置器 std::alloc"></a>特殊配置器 std::alloc</h2><p><img src="https://pic3.zhimg.com/80/v2-0f636198bb482aea31ef01d48e5a233e_1440w.jpg" alt="盗图2"></p>
+<p>特殊配置器的结构大概如上。</p>
+<p>关于std::alloc的讲解，可以参见<a href="https://blog.csdn.net/ZLP_CSDN/article/details/106427351" target="_blank" rel="noopener">博客</a>。</p>
+<h1 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h1><p>容器是STL里面用户程序猿接触最多的东西，主要可以分为：</p>
+<ol>
+<li>关联式容器</li>
+<li>序列式容器</li>
+</ol>
+<p>其中在C++11后加入了unordered_map和unordered_set这两种新的容器，其内部本质是一个hashtable，本质上还是一种关联式容器，只是采用了hashtable的形式而非树型（红黑树）结构，导致这类容器无法根据关键字进行范围的查找。</p>
+<h2 id="序列式容器"><a href="#序列式容器" class="headerlink" title="序列式容器"></a>序列式容器</h2><p>对于序列式容器，C++自身提供了数组类型，除此之外STL提供了vector，deque，list，stack，queue，priority_queue等序列容器，而stack和queue实际上都是在deque上定义的，更接近适配器（配接器）的概念。</p>
+<hr>
+<p>原本打算将所有的STL的分析文档全部写在一个文档里，但是感觉太长了，于是后续的打算分开写（还能水博客数量。。。）。</p>
+<p>下一篇应该就是对于容器的简单介绍。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/stl/" rel="tag"># stl</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/17/effective-c-6/" rel="prev" title="effective_c++ 章节6">
+      <i class="fa fa-chevron-left"></i> effective_c++ 章节6
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xinrui Tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
